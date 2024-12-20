@@ -1,11 +1,17 @@
 import React, {useState} from "react";
 import axios from "axios";
+import { p } from "framer-motion/client";
+import { useAuth } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 
 export function GridBackgroundDemo() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState(null)
+  const {login} = useAuth()
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,9 +20,21 @@ export function GridBackgroundDemo() {
         "http://localhost:3000/api/auth/login",
         {email, password}
       );
-      console.log(response);      
+      if(response.data.success){
+        login(response.data.user)
+        localStorage.setItem("token", response.data.token)
+        if(response.data.user.role === "admin"){
+          navigate('/admin-dashboard')
+        } else {
+          alert("Something's Wrong")
+        }
+      }      
     } catch (error){
-      console.log(error);      
+      if (error.response && !error.response.data.success){
+        setError(error.response.data.error)
+      } else {
+        setError("Server Error")
+      }
     }
   }
 
@@ -68,6 +86,7 @@ export function GridBackgroundDemo() {
       <p className="text-4xl sm:text-5xl lg:text-7xl font-orbit font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-black to-blue-950 py-8 text-center">
         A K C Link Tech
       </p>
+      {error && <p className="text-red-500"> {error} </p>}
       <form onSubmit={handleSubmit}      
         style={styles.form}
         className="relative z-20 mt-8 w-full max-w-sm sm:max-w-md lg:max-w-lg bg-white shadow-lg"
@@ -82,6 +101,7 @@ export function GridBackgroundDemo() {
             className="text-sm"
             type="text"
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
 
@@ -95,6 +115,7 @@ export function GridBackgroundDemo() {
             className="text-sm"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
         <button
