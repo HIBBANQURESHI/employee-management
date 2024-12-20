@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily : {
+        "orbit" : ["Orbitron", 'sans-serif']
+      },
       backgroundImage: (theme) => ({
         // Example for using bg-grid utilities directly in your CSS
         "grid-pattern": `url("${svgToDataUri(

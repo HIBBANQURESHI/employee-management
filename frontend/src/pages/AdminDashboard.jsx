@@ -1,11 +1,8 @@
 import React from 'react'
-import { GridBackgroundDemo } from '../components/background'
 
 const AdminDashboard = () => {
   return (
-    <GridBackgroundDemo>
-        dsakdjsai
-    </GridBackgroundDemo>
+  <div className='text-black'>dsakdjsai</div>
   )
 }
 
