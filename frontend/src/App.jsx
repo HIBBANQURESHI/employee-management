@@ -3,6 +3,9 @@ import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import RoleBaseRoutes from "./utils/RoleBaseRoutes";
+import AdminSummary from "./components/AdminSummary";
+import DepartmentList from "./components/departmentList";
+import AddDepartment from "./components/AddDepartment";
 
 function App() {
   return (
@@ -16,7 +19,14 @@ function App() {
            <AdminDashboard/>
            </RoleBaseRoutes>
           </PrivateRoutes> 
-           }> </Route>        
+           }> 
+
+           <Route index element = {<AdminSummary/>}></Route>
+           <Route path = "/admin-dashboard/departments" element = {<DepartmentList/>}></Route>
+           <Route path = "/admin-dashboard/add-department" element = {<AddDepartment/>}></Route>
+         
+           
+           </Route>        
         
       </Routes>
     </BrowserRouter>
