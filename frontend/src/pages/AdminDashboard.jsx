@@ -1,5 +1,7 @@
 import React from 'react'
 import { useAuth } from '../context/authContext'
+import Sidebar from '../components/sidebar'
+
 
 const AdminDashboard = () => {
 
@@ -7,7 +9,9 @@ const AdminDashboard = () => {
 
 
   return (
-  <div className='text-black'>Admin Dashboard {user && user.name}</div>
+   <div>
+    <Sidebar/>
+   </div>
   )
 }
 

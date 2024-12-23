@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import axios from "axios";
-import { p } from "framer-motion/client";
 import { useAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 
