@@ -2,6 +2,7 @@ import axios from 'axios';
 import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 const AddDepartment = () => {
     const [department, setDepartment] = useState({
         dep_name : '',
@@ -20,9 +21,9 @@ const AddDepartment = () => {
         try {
             const response = await axios.post('http://localhost:3000/api/department/add', department, {
                 headers : {
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
-                }
-            })
+                    Authorization : `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
             if(response.data.success){
                 navigate("/admin-dashboard/departments")
             }
@@ -49,6 +50,7 @@ const AddDepartment = () => {
             <input
               type="text"
               id="dep_name"
+              name="dep_name"
               onChange={handleChange}
               placeholder="Enter Department Name"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-1 focus:ring-blue-300 focus:outline-none bg-gray-50"
