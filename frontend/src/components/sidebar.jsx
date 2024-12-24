@@ -29,7 +29,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/admin-dashboard"
+          to="/admin-dashboard/employees"
           className={({ isActive }) =>
             `${
               isActive ? "bg-blue-500 text-white font-semibold" : "text-gray-800"

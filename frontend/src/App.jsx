@@ -7,6 +7,8 @@ import AdminSummary from "./components/AdminSummary";
 import DepartmentList from "./components/departmentList";
 import AddDepartment from "./components/AddDepartment";
 import EditDepartment from "./components/EditDepartment";
+import EmployeeList from "./components/EmployeeList";
+import EmployeeAdd from "./components/EmployeeAdd";
 
 function App() {
   return (
@@ -26,6 +28,10 @@ function App() {
            <Route path = "/admin-dashboard/departments" element = {<DepartmentList/>}></Route>
            <Route path = "/admin-dashboard/add-department" element = {<AddDepartment/>}></Route>
            <Route path = "/admin-dashboard/department/:id" element = {<EditDepartment/>}></Route>
+
+           <Route path = "/admin-dashboard/employees" element = {<EmployeeList/>}></Route>
+           <Route path = "/admin-dashboard/add-employee" element = {<EmployeeAdd/>}></Route>
+
          
            
            </Route>        
