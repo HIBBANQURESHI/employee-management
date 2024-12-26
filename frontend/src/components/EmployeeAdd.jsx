@@ -3,43 +3,42 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const EmployeeAdd = () => {
+  const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({})
-    const navigate = useNavigate()
-
-    const handleChange = (e) => {
-        const {name, value, files} = e.target
-        if(name === "image"){
-            setFormData((prevData) => ({...prevData, [name] : files[0]}))
-        } else {
-            setFormData((prevData) => ({...prevData, [name] : value}))
-        }
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-
-        const formDataObj = new FormData()
-        Object.keys(formData).forEach((key) => {
-            formDataObj.append(key, formData[key])
-        })
-
-        try {
-            const response = await axios.post('http://localhost:3000/api/employee/add', formDataObj, {
-                headers : {
-                    Authorization : `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
-            if(response.data.success){
-                navigate("/admin-dashboard/employee")
-            }
-        } catch (error) {
-            if(error.response && !error.response.data.success){
-                alert(error.response.data.error)
-            }
-        }
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (e.target.type === "file") {
+      setFormData((prevData) => ({ ...prevData, [name]: files[0] }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formDataObj = new FormData();
+    Object.keys(formData).forEach((key) => {
+      formDataObj.append(key, formData[key]);
+    });
+
+    try {
+      const response = await axios.post('http://localhost:3000/api/employee/add', formDataObj, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if (response.data.success) {
+        navigate("/admin-dashboard/employees");
+      }
+    } catch (error) {
+      if (error.response && !error.response.data.success) {
+        alert(error.response.data.error);
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
@@ -47,64 +46,54 @@ const EmployeeAdd = () => {
         <h3 className="text-2xl font-semibold text-center mb-6 text-gray-800">Add New Employee</h3>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* Name */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                Name
-              </label>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Name</label>
               <input
                 type="text"
                 id="name"
+                name="name" // Added name attribute
                 onChange={handleChange}
                 placeholder="Enter Name"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-            {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email
-              </label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email</label>
               <input
                 type="email"
                 id="email"
+                name="email" // Added name attribute
                 onChange={handleChange}
                 placeholder="Enter Email"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-            {/* Employee ID */}
             <div>
-              <label htmlFor="employeeId" className="block text-sm font-medium text-gray-700 mb-2">
-                Employee ID
-              </label>
+              <label htmlFor="employeeId" className="block text-sm font-medium text-gray-700 mb-2">Employee ID</label>
               <input
                 type="text"
-                onChange={handleChange}
                 id="employeeId"
+                name="employeeId" // Added name attribute
+                onChange={handleChange}
                 placeholder="Enter Employee ID"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-            {/* DOB */}
             <div>
-              <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-2">
-                Date of Birth
-              </label>
+              <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
               <input
                 type="date"
                 id="dob"
+                name="dob" // Added name attribute
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-            {/* Gender */}
             <div>
-              <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">
-                Gender
-              </label>
+              <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
               <select
                 id="gender"
+                name="gender" // Added name attribute
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
@@ -114,13 +103,11 @@ const EmployeeAdd = () => {
                 <option value="other">Other</option>
               </select>
             </div>
-            {/* Marital Status */}
             <div>
-              <label htmlFor="maritalStatus" className="block text-sm font-medium text-gray-700 mb-2">
-                Marital Status
-              </label>
+              <label htmlFor="martialStatus" className="block text-sm font-medium text-gray-700 mb-2">Martial Status</label>
               <select
-                id="maritalStatus"
+                id="martialStatus"
+                name="martialStatus" // Added name attribute
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
@@ -129,65 +116,55 @@ const EmployeeAdd = () => {
                 <option value="married">Married</option>
               </select>
             </div>
-            {/* Designation */}
             <div>
-              <label htmlFor="designation" className="block text-sm font-medium text-gray-700 mb-2">
-                Designation
-              </label>
+              <label htmlFor="designation" className="block text-sm font-medium text-gray-700 mb-2">Designation</label>
               <input
                 type="text"
                 id="designation"
+                name="designation" // Added name attribute
                 onChange={handleChange}
                 placeholder="Enter Designation"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-            {/* Department */}
             <div>
-              <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-2">
-                Department
-              </label>
+              <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-2">Department</label>
               <input
                 type="text"
                 id="department"
+                name="department" // Added name attribute
                 onChange={handleChange}
                 placeholder="Enter Department"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-            {/* Salary */}
             <div>
-              <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-2">
-                Salary
-              </label>
+              <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-2">Salary</label>
               <input
                 type="number"
-                onChange={handleChange}
                 id="salary"
+                name="salary" // Added name attribute
+                onChange={handleChange}
                 placeholder="Enter Salary"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-            {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">Password</label>
               <input
                 type="password"
                 id="password"
+                name="password" // Added name attribute
                 onChange={handleChange}
                 placeholder="Enter Password"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-            {/* Role */}
             <div>
-              <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">
-                Role
-              </label>
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">Role</label>
               <select
                 id="role"
+                name="role" // Added name attribute
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
@@ -196,15 +173,13 @@ const EmployeeAdd = () => {
                 <option value="employee">Employee</option>
               </select>
             </div>
-            {/* Image Upload */}
             <div className="sm:col-span-2">
-              <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-2">
-                Upload Image
-              </label>
+              <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
               <input
                 type="file"
-                onChange={handleChange}
                 id="image"
+                name="image" // Added name attribute
+                onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
