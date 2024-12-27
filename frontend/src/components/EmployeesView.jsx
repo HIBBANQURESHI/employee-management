@@ -31,42 +31,58 @@ const EmployeesView = () => {
 
   return (
     <>{employee  ?  (
-    <div>
-        <h2> Employee Details </h2>
-        <div> 
-        <div>
-            <img src={`http://localhost:3000/${employee.userId.profileImage}`} alt='Profile Image'/>
-        </div> 
-        <div>
-            <div>
-                <p> Name : </p>
-                <p> {employee.userId.name} </p>
-            </div>
-            <div>
-                <p> Employee ID : </p>
-                <p> {employee.employeeId} </p>
-            </div>
-            <div>
-                <p> DOB : </p>
-                <p> {new Date(employee.dob).toLocaleDateString()} </p>
-            </div>
-            <div>
-                <p> Gender : </p>
-                <p> {employee.gender} </p>
-            </div>
-            <div>
-                <p> Department : </p>
-                <p> {employee.department} </p>
-            </div>
-            <div>
-                <p>Martial Status</p>
-                <p> {employee.martialStatus} </p>
-            </div>
+<div className="min-h-screen bg-gray-50 flex justify-center items-center py-8">
+  <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-3xl">
+    <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Employee Details</h2>
+    <div className="flex flex-col items-center">
+      <div className="w-32 h-32 rounded-full border border-gray-300 overflow-hidden mb-6">
+        <img
+          src={`http://localhost:3000/${employee.userId.profileImage}`}
+          alt="Profile Image"
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+        <div className="flex justify-between border-b py-2">
+          <p className="text-gray-500 font-medium">Name:</p>
+          <p className="text-gray-800 font-semibold">{employee.userId.name}</p>
         </div>
+        <div className="flex justify-between border-b py-2">
+          <p className="text-gray-500 font-medium">Employee ID:</p>
+          <p className="text-gray-800 font-semibold">{employee.employeeId}</p>
         </div>
-        
+        <div className="flex justify-between border-b py-2">
+          <p className="text-gray-500 font-medium">DOB:</p>
+          <p className="text-gray-800 font-semibold">
+            {new Date(employee.dob).toLocaleDateString()}
+          </p>
+        </div>
+        <div className="flex justify-between border-b py-2">
+          <p className="text-gray-500 font-medium">Gender:</p>
+          <p className="text-gray-800 font-semibold">{employee.gender}</p>
+        </div>
+        <div className="flex justify-between border-b py-2">
+          <p className="text-gray-500 font-medium">Department:</p>
+          <p className="text-gray-800 font-semibold">{employee.department}</p>
+        </div>
+        <div className="flex justify-between border-b py-2">
+          <p className="text-gray-500 font-medium">Marital Status:</p>
+          <p className="text-gray-800 font-semibold">{employee.martialStatus}</p>
+        </div>
+        <div className="flex justify-between border-b py-2">
+          <p className="text-gray-500 font-medium">Salary:</p>
+          <p className="text-gray-800 font-semibold">{employee.salary}</p>
+        </div>
+      </div>
     </div>
-    ) : <div> Loading.... </div>}</>
+  </div>
+</div>
+
+    ) : <div className="min-h-screen flex justify-center items-center bg-gray-50">
+    <div className="text-center">
+      <p className="text-xl font-semibold text-gray-600 animate-pulse">Loading...</p>
+    </div>
+  </div>}</>
   )
 }
 

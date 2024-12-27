@@ -51,42 +51,6 @@ const Sidebar = () => {
           <RiBuilding2Line className="text-xl" />
           <span className="hidden lg:inline">Departments</span>
         </NavLink>
-
-        <NavLink
-          to="/admin-dashboard"
-          className={({ isActive }) =>
-            `${
-              isActive ? "bg-blue-500 text-white font-semibold" : "text-gray-800"
-            } flex items-center space-x-4 block py-3 px-4 rounded text-base hover:bg-blue-100 hover:text-gray-800 transition-all duration-200`
-          }
-        >
-          <VscCoffee className="text-xl" />
-          <span className="hidden lg:inline">Leaves</span>
-        </NavLink>
-
-        <NavLink
-          to="/admin-dashboard"
-          className={({ isActive }) =>
-            `${
-              isActive ? "bg-blue-500 text-white font-semibold" : "text-gray-800"
-            } flex items-center space-x-4 block py-3 px-4 rounded text-base hover:bg-blue-100 hover:text-gray-800 transition-all duration-200`
-          }
-        >
-          <MdAttachMoney className="text-xl" />
-          <span className="hidden lg:inline">Salary</span>
-        </NavLink>
-
-        <NavLink
-          to="/admin-dashboard"
-          className={({ isActive }) =>
-            `${
-              isActive ? "bg-blue-500 text-white font-semibold" : "text-gray-800"
-            } flex items-center space-x-4 block py-3 px-4 rounded text-base hover:bg-blue-100 hover:text-gray-800 transition-all duration-200`
-          }
-        >
-          <IoSettingsOutline className="text-xl" />
-          <span className="hidden lg:inline">Settings</span>
-        </NavLink>
       </div>
     </div>
   );

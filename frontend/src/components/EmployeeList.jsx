@@ -10,22 +10,18 @@ const EmployeeList = () => {
 
   const [employees, setEmployees] = useState([])
   const [empLoading, setEmpLoading] = useState(false)
+  const [filteredEmployee, setFilteredEmployee] = useState([])
+
+  const onEmployeeDelete = async (id) => {
+    const data = employees.filter(emp => emp._id !== id)
+    setDepartments(data)
+  }
 
   const columns = [
     { name: "S.No", selector: (row) => row.sno, sortable: true },
     { name: "Name", selector: (row) => row.name, sortable: true },
     { name: "Department", selector: (row) => row.dep_name, sortable: true },
     { name: "Date of Birth", selector: (row) => row.dob, sortable: true },
-    {
-      name: "Profile",
-      cell: (row) => (
-        <img
-          src={row.profileImage}
-          alt="Profile"
-          className="w-10 h-10 rounded-full"
-        />
-      ),
-    },
     {
       name: "Action",
       cell: (row) => row.action,
@@ -51,10 +47,10 @@ const EmployeeList = () => {
               name: emp.userId.name,
               dob: new Date(emp.dob).toDateString(),
               profileImage:  <img src={`http://localhost:3000/${emp.userId.profileImage}`}/> ,
-              action: <EmployeeButtons DepId={emp._id}/>,
+              action: <EmployeeButtons Id={emp._id}  />,
           }));
           setEmployees(data);
-          setFilteredDepartments(data);
+          setFilteredEmployee(data);
       }
       
       } catch (error) {
@@ -68,6 +64,13 @@ const EmployeeList = () => {
     fetchEmployees();
   }, [])
 
+  const handleFilter = (e) => {
+    const records = employees.filter((emp) => (
+      emp.name.toLowerCase().includes(e.target.value.toLowerCase())
+    ))
+    setFilteredEmployee(records);
+  }
+
   return (
     <div className='p-6 bg-gray-50 min-h-screen text-gray-800'>
         <div className="text-center mb-6">
@@ -77,6 +80,7 @@ const EmployeeList = () => {
                 <input
                 type="text"
                 placeholder="Search by Employee name"
+                onChange={handleFilter}
                 className="px-4 py-2 w-full max-w-md bg-white border border-gray-300 rounded-md text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none"
                 />
             <Link
@@ -87,7 +91,7 @@ const EmployeeList = () => {
             </Link>
             </div>
             <div>
-              <DataTable columns= {columns} data={employees}/>
+              <DataTable columns= {columns} data={filteredEmployee} pagination/>
             </div>
     </div>
   )

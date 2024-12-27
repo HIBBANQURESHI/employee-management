@@ -3,6 +3,7 @@ import Employee from "../models/Employee.js"
 import User from "../models/User.js"
 import bcrypt from "bcrypt"
 import path from 'path'
+import Department from '../models/Department.js'
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -11,7 +12,7 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname))
     }
-})
+});
 
 const upload = multer({ storage: storage })
 
@@ -68,7 +69,7 @@ const addEmployee = async (req, res) => {
         return res.status(500).json({success: false, error: "Server Error In Adding Employee !"})
 }
 
-}
+};
 
 const getEmployees = async (req, res) => {
     try {
@@ -77,7 +78,7 @@ const getEmployees = async (req, res) => {
     } catch (error) {
         return res.status(500).json({success: false, error: "Get Employees Server Error"})
     }
-}
+};
 
 const getEmployee = async (req, res) => {
     const {id} = req.params;
@@ -87,6 +88,63 @@ const getEmployee = async (req, res) => {
     } catch (error) {
         return res.status(500).json({success: false, error: "Get Employees Server Error"})
     }
+};
+
+const updateEmployee = async (req,res) => {
+    try {
+        const {id} = req.params;
+        const {name, martialStatus, designation, department, salary} = req.body;
+        const employee = await Employee.findById({_id : id});
+        if(!employee){
+            return res.status(404).json({success: false, error: "Employee Not Found !"})        
+        }
+        
+        const user = await User.findById({_id: employee.userId})
+        if(!employee){
+            return res.status(404).json({success: false, error: "User Not Found !"})        
+        }
+
+        const updateUser = await User.findByIdAndUpdate({_id: employee.userId}, {name})
+        const updateEmployee = await Employee.findByIdAndUpdate({_id: id},{
+            martialStatus,
+            designation,
+            salary,
+            department
+        });
+
+        if(!updateUser || !updateEmployee){
+            return res.status(404).json({success: false, error: "Document Not Found !"})        
+        }
+
+        return res.status(200).json({success: true, message: "Employee Updated !"})        
+
+    } catch (error) {
+        return res.status(500).json({success: false, error: "Edit Employee Server Error !"})        
+    }
+
 }
 
-export{addEmployee, upload, getEmployees, getEmployee}
+//const deleteEmployee = async (req, res) => {
+//    try {
+//        const { id } = req.params;  // Ensure the ID is coming from the route parameter
+//        if (!id) {
+//            return res.status(400).json({ success: false, error: "Employee ID is required" });
+//        }
+//        const employee = await Employee.findByIdAndDelete(id);  // Correct usage of the id parameter
+//
+//        if (!employee) {
+//            return res.status(404).json({ success: false, error: "Employee not found" });
+//        }
+//
+//        return res.status(200).json({ success: true, message: "Employee deleted successfully" });
+//    } catch (error) {
+//        console.error("Delete Employee Error:", error);  // Add logging for any unexpected error
+//        return res.status(500).json({ success: false, error: "Delete Employee Server Error!" });
+//    }
+//};
+
+
+
+
+
+export{addEmployee, upload, getEmployees, getEmployee, updateEmployee}

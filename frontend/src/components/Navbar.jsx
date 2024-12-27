@@ -9,9 +9,13 @@ const Navbar = () => {
       <p className="ml-4">
         Hi, <span className="font-semibold text-blue-500">{user.name}</span>!
       </p>
-      <button className="px-4 py-1 bg-red-500 text-white rounded-md font-medium hover:bg-blue-400 transition">
+      <button
+      className="px-4 py-1 bg-red-500 text-white rounded-md font-medium hover:bg-blue-400 transition"
+      onClick={() => window.location.href = '/login'}
+      >
         Logout
       </button>
+
     </div>
   );
 };

@@ -13,12 +13,6 @@ export const columns = [
       sortable: true
   },
   {
-    name : "Image",
-    selector: (row) => row.profileImage,
-    sortable: true,
-    width: "90px"
-  },
-  {
     name : "Department",
     selector: (row) => row.dep_name,
     sortable: true
@@ -39,7 +33,7 @@ export const columns = [
 export const fetchDepartments = async () => {
     let departments
     try {
-      const response = await axios.get('http://localhost:3000/api/employees', {
+      const response = await axios.get('http://localhost:3000/api/departments', {
         headers:{
           Authorization : `Bearer ${localStorage.getItem('token')}`
         }
@@ -63,15 +57,14 @@ export const EmployeeButtons = ({Id}) => {
 
     return (
       <div className="flex flex-col space-y-2 py-3"> 
+      <button className="flex items-center justify-center px-3 py-2 bg-green-100 text-green-600 font-medium rounded-md border border-green-300 hover:bg-green-200 transition"
+      onClick={() => navigate(`/admin-dashboard/employees/${Id}`)}>
+        View
+      </button>
 
-      <button className="flex items-center justify-center px-3 py-2 bg-blue-100 text-blue-600 font-medium rounded-md border border-blue-300 hover:bg-blue-200 transition">
+      <button className="flex items-center justify-center px-3 py-2 bg-blue-100 text-blue-600 font-medium rounded-md border border-blue-300 hover:bg-blue-200 transition"
+      onClick={() => navigate(`/admin-dashboard/employees/edit/${Id}`)}>
         Edit
-      </button>
-      <button className="flex items-center justify-center px-3 py-2 bg-green-100 text-green-600 font-medium rounded-md border border-green-300 hover:bg-green-200 transition">
-        Salary
-      </button>
-      <button className="flex items-center justify-center px-3 py-2 bg-yellow-100 text-yellow-600 font-medium rounded-md border border-yellow-300 hover:bg-yellow-200 transition">
-        Leave
       </button>
     </div>
     );
