@@ -6,6 +6,7 @@ import employeeRouter from './routes/employee.js'
 import connectToDatabase from './db/db.js'
 
 connectToDatabase()
+require('dotenv').config();
 
 const app = express()
 app.use(cors())
