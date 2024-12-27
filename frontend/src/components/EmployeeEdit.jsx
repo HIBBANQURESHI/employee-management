@@ -5,11 +5,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 const EmployeeEdit = () => {
   const [formData, setFormData] = useState({});
   const [employee, setEmployee] = useState({
-    name:'',
-    martialStatus:'',
-    designation:'',
+    name: '',
+    martialStatus: '',
+    designation: '',
     salary: 0,
-    department:''
+    department: ''
   });
   const navigate = useNavigate();
   const { id } = useParams();
@@ -24,14 +24,14 @@ const EmployeeEdit = () => {
           },
         });
         if (response.data && response.data.success) {
-            const employee = response.data.employee;
+          const employee = response.data.employee;
           setEmployee((prev) => ({
             ...prev,
-            name:employee.userId.name,
-            martialStatus:employee.martialStatus,
-            designation:employee.designation,
-            salary:employee.salary,
-            department:employee.department  
+            name: employee.userId.name,
+            martialStatus: employee.martialStatus,
+            designation: employee.designation,
+            salary: employee.salary,
+            department: employee.department
           }));
           setFormData(response.data.employee); // Initialize form data
         } else {
@@ -56,12 +56,12 @@ const EmployeeEdit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formDataObj = new FormData();
     Object.keys(formData).forEach((key) => {
       formDataObj.append(key, formData[key]);
     });
-  
+
     try {
       const response = await axios.put(
         `http://localhost:3000/api/employee/${id}`,
@@ -83,7 +83,7 @@ const EmployeeEdit = () => {
       alert('Error updating employee. Please try again later.');
     }
   };
-  
+
   if (!employee) {
     return <div>Loading...</div>;
   }

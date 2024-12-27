@@ -42,7 +42,7 @@ const EmployeeAdd = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-3xl">
+      <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl">
         <h3 className="text-2xl font-semibold text-center mb-6 text-gray-800">Add New Employee</h3>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -51,7 +51,7 @@ const EmployeeAdd = () => {
               <input
                 type="text"
                 id="name"
-                name="name" // Added name attribute
+                name="name"
                 onChange={handleChange}
                 placeholder="Enter Name"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -62,7 +62,7 @@ const EmployeeAdd = () => {
               <input
                 type="email"
                 id="email"
-                name="email" // Added name attribute
+                name="email"
                 onChange={handleChange}
                 placeholder="Enter Email"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -73,7 +73,7 @@ const EmployeeAdd = () => {
               <input
                 type="text"
                 id="employeeId"
-                name="employeeId" // Added name attribute
+                name="employeeId"
                 onChange={handleChange}
                 placeholder="Enter Employee ID"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -84,7 +84,7 @@ const EmployeeAdd = () => {
               <input
                 type="date"
                 id="dob"
-                name="dob" // Added name attribute
+                name="dob"
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
@@ -93,7 +93,7 @@ const EmployeeAdd = () => {
               <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
               <select
                 id="gender"
-                name="gender" // Added name attribute
+                name="gender"
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
@@ -104,10 +104,10 @@ const EmployeeAdd = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="martialStatus" className="block text-sm font-medium text-gray-700 mb-2">Martial Status</label>
+              <label htmlFor="martialStatus" className="block text-sm font-medium text-gray-700 mb-2">Marital Status</label>
               <select
                 id="martialStatus"
-                name="martialStatus" // Added name attribute
+                name="martialStatus"
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
@@ -121,7 +121,7 @@ const EmployeeAdd = () => {
               <input
                 type="text"
                 id="designation"
-                name="designation" // Added name attribute
+                name="designation"
                 onChange={handleChange}
                 placeholder="Enter Designation"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -132,7 +132,7 @@ const EmployeeAdd = () => {
               <input
                 type="text"
                 id="department"
-                name="department" // Added name attribute
+                name="department"
                 onChange={handleChange}
                 placeholder="Enter Department"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -143,7 +143,7 @@ const EmployeeAdd = () => {
               <input
                 type="number"
                 id="salary"
-                name="salary" // Added name attribute
+                name="salary"
                 onChange={handleChange}
                 placeholder="Enter Salary"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -154,7 +154,7 @@ const EmployeeAdd = () => {
               <input
                 type="password"
                 id="password"
-                name="password" // Added name attribute
+                name="password"
                 onChange={handleChange}
                 placeholder="Enter Password"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -164,7 +164,7 @@ const EmployeeAdd = () => {
               <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">Role</label>
               <select
                 id="role"
-                name="role" // Added name attribute
+                name="role"
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
@@ -178,7 +178,7 @@ const EmployeeAdd = () => {
               <input
                 type="file"
                 id="image"
-                name="image" // Added name attribute
+                name="image"
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
