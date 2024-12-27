@@ -15,7 +15,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/department', departmentRouter)
 app.use('/api/employee', employeeRouter)
 
-app.listen( process.env.PORT, () => {
+app.listen( process.env.PORT || 5000, () => {
     console.log(`Server is running on ${process.env.PORT}`);
     
 })
