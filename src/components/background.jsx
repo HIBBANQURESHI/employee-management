@@ -17,7 +17,12 @@ export function GridBackgroundDemo() {
     try{
       const response = await axios.post(
         "https://ems-backend-mu.vercel.app/api/auth/login",
-        {email, password}
+        {email, password},
+        {
+          headers: {
+            "Content-Type": "application/json", // Ensure content type is set
+          }
+        }
       );
       if(response.data.success){
         login(response.data.user)
