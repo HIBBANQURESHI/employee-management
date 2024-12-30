@@ -4,7 +4,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import RoleBaseRoutes from "./utils/RoleBaseRoutes";
 import AdminSummary from "./components/AdminSummary";
-import DepartmentList from "./components/departmentList";
+import DepartmentList from "./components/DepartmentList";
 import AddDepartment from "./components/AddDepartment";
 import EditDepartment from "./components/EditDepartment";
 import EmployeeList from "./components/EmployeeList";
