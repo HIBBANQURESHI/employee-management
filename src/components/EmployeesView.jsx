@@ -9,7 +9,7 @@ const EmployeesView = () => {
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/employee/${id}`, {
+        const response = await axios.get(`https://ems-backend-mu.vercel.app/api/employee/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
@@ -35,7 +35,7 @@ const EmployeesView = () => {
             <div className="flex flex-col items-center">
               <div className="w-32 h-32 rounded-full border border-gray-300 overflow-hidden mb-6">
                 <img
-                  src={`http://localhost:3000/${employee.userId.profileImage}`}
+                  src={`https://ems-backend-mu.vercel.app/${employee.userId.profileImage}`}
                   alt="Profile Image"
                   className="w-full h-full object-cover"
                 />

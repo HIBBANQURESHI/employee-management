@@ -29,7 +29,7 @@ const EmployeeList = () => {
     const fetchEmployees = async () => {
       setEmpLoading(true);
       try {
-        const response = await axios.get('http://localhost:3000/api/employee', {
+        const response = await axios.get('https://ems-backend-mu.vercel.app/api/employee', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
@@ -42,7 +42,7 @@ const EmployeeList = () => {
             dep_name: emp.department,
             name: emp.userId.name,
             dob: new Date(emp.dob).toDateString(),
-            profileImage: <img src={`http://localhost:3000/${emp.userId.profileImage}`} />,
+            profileImage: <img src={`https://ems-backend-mu.vercel.app/${emp.userId.profileImage}`} />,
             action: <EmployeeButtons Id={emp._id} />,
           }));
           setEmployees(data);

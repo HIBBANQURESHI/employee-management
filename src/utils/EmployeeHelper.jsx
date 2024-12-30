@@ -33,7 +33,7 @@ export const columns = [
 export const fetchDepartments = async () => {
     let departments
     try {
-      const response = await axios.get('http://localhost:3000/api/departments', {
+      const response = await axios.get('https://ems-backend-mu.vercel.app/api/departments', {
         headers:{
           Authorization : `Bearer ${localStorage.getItem('token')}`
         }
