@@ -14,33 +14,37 @@ export function GridBackgroundDemo() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
+    setError(null); // Reset error before a new attempt
+  
+    try {
       const response = await axios.post(
         "https://ems-backend-mu.vercel.app/api/auth/login",
-        {email, password},
+        { email, password },
         {
-          headers: {
-            "Content-Type": "application/json", // Ensure content type is set
-          }
+          headers: { "Content-Type": "application/json" },
         }
       );
-      if(response.data.success){
-        login(response.data.user)
-        localStorage.setItem("token", response.data.token)
-        if(response.data.user.role === "admin"){
-          navigate('/admin-dashboard')
+  
+      if (response.data.success) {
+        login(response.data.user);
+        localStorage.setItem("token", response.data.token);
+  
+        if (response.data.user.role === "admin") {
+          navigate("/admin-dashboard");
         } else {
-          alert("Something's Wrong")
+          alert("Something's Wrong");
         }
-      }      
-    } catch (error){
-      if (error.response && !error.response.data.success){
-        setError(error.response.data.error)
+      }
+    } catch (error) {
+      console.error("Login error:", error.message);
+      if (error.response && error.response.data.error) {
+        setError(error.response.data.error);
       } else {
-        setError("Server Error")
+        setError("Server Error");
       }
     }
-  }
+  };
+  
 
 
   const styles = {
