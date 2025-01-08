@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { PiSuitcaseSimple } from "react-icons/pi";
-import { RiBuilding2Line } from "react-icons/ri";
+import { RiBuilding2Line, RiCalendarCheckLine } from "react-icons/ri";
 import { VscCoffee } from "react-icons/vsc";
 import { MdAttachMoney } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -50,6 +50,19 @@ const Sidebar = () => {
         >
           <RiBuilding2Line className="text-xl" />
           <span className="hidden lg:inline">Departments</span>
+        </NavLink>
+
+        {/* Attendance Management Link */}
+        <NavLink
+          to="/admin-dashboard/attendance"
+          className={({ isActive }) =>
+            `${
+              isActive ? "bg-blue-500 text-white font-semibold" : "text-gray-800"
+            } flex items-center space-x-4 block py-3 px-4 rounded text-base hover:bg-blue-100 hover:text-gray-800 transition-all duration-200`
+          }
+        >
+          <RiCalendarCheckLine className="text-xl" />
+          <span className="hidden lg:inline">Attendance</span>
         </NavLink>
       </div>
     </div>
