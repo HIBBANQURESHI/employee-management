@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import SummaryCard from './SummaryCard';
 import { FaBuilding, FaUsers, FaCalendarAlt } from 'react-icons/fa';
+import axios from 'axios';
 
 const AdminSummary = () => {
   const [notes, setNotes] = useState('');
   const [currentDate, setCurrentDate] = useState('');
+  const [employeeCount, setEmployeeCount] = useState(0);
+  const [departmentCount, setDepartmentCount] = useState(0);
 
   useEffect(() => {
     // Load saved notes from localStorage
@@ -23,6 +26,41 @@ const AdminSummary = () => {
         day: 'numeric',
       })
     );
+
+    // Fetch employee count
+    const fetchEmployeeCount = async () => {
+      try {
+        const response = await axios.get('https://ems-backend-mu.vercel.app/api/employee', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        if (response.data.success) {
+          setEmployeeCount(response.data.employees.length);
+        }
+      } catch (error) {
+        console.error('Failed to fetch employee count:', error);
+      }
+    };
+
+    // Fetch department count
+    const fetchDepartmentCount = async () => {
+      try {
+        const response = await axios.get('https://ems-backend-mu.vercel.app/api/department', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        if (response.data.success) {
+          setDepartmentCount(response.data.departments.length);
+        }
+      } catch (error) {
+        console.error('Failed to fetch department count:', error);
+      }
+    };
+
+    fetchEmployeeCount();
+    fetchDepartmentCount();
   }, []);
 
   const handleNotesChange = (e) => {
@@ -39,13 +77,13 @@ const AdminSummary = () => {
         <SummaryCard
           icon={<FaUsers className="text-blue-500" />}
           text="Total Employees"
-          number={6}
+          number={employeeCount} // Display total employee count
           color="bg-white"
         />
         <SummaryCard
           icon={<FaBuilding className="text-green-500" />}
           text="Total Departments"
-          number={2}
+          number={departmentCount} // Display total department count
           color="bg-white"
         />
         <SummaryCard

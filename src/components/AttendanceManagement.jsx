@@ -24,6 +24,30 @@ const AttendanceManagement = () => {
         fetchEmployees();
     }, []);
 
+    const fetchAttendance = async (selectedDate) => {
+        try {
+            const response = await axios.get(
+                `https://ems-backend-mu.vercel.app/api/attendance/${selectedDate}`,
+                { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+            );
+            if (response.data.success) {
+                const fetchedAttendance = {};
+                response.data.attendance.forEach((record) => {
+                    fetchedAttendance[record.employeeId] = record.status;
+                });
+                setAttendance(fetchedAttendance);
+            }
+        } catch (error) {
+            console.error("Error fetching attendance:", error);
+        }
+    };
+
+    const handleDateChange = (e) => {
+        const selectedDate = e.target.value;
+        setDate(selectedDate);
+        fetchAttendance(selectedDate);
+    };
+
     const handleAttendanceChange = (id, status) => {
         setAttendance((prev) => ({ ...prev, [id]: status }));
     };
@@ -55,7 +79,7 @@ const AttendanceManagement = () => {
                     type="date"
                     id="date"
                     className="mt-1 block w-full sm:w-auto rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200"
-                    onChange={(e) => setDate(e.target.value)}
+                    onChange={handleDateChange}
                 />
             </div>
             <table className="w-full bg-white shadow-md rounded-lg">
@@ -73,6 +97,7 @@ const AttendanceManagement = () => {
                             <td>{emp.department}</td>
                             <td>
                                 <select
+                                    value={attendance[emp._id] || "Absent"}
                                     onChange={(e) => handleAttendanceChange(emp._id, e.target.value)}
                                     className="border rounded p-2"
                                 >

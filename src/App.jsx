@@ -12,6 +12,9 @@ import EmployeeAdd from "./components/EmployeeAdd";
 import EmployeesView from "./components/EmployeesView";
 import EmployeeEdit from "./components/EmployeeEdit";
 import AttendanceManagement from "./components/AttendanceManagement";
+//import EmployeeDashboard from './components/EmployeeDashboard';
+
+
 
 function App() {
   return (
@@ -38,6 +41,7 @@ function App() {
            <Route path = "/admin-dashboard/employees/edit/:id" element = {<EmployeeEdit/>}></Route>
 
            <Route path="/admin-dashboard/attendance" element={<AttendanceManagement/>} />
+
 
 
 
