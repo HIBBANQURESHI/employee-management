@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const AttendanceManagement = () => {
     const [employees, setEmployees] = useState([]);
     const [attendance, setAttendance] = useState({});
     const [date, setDate] = useState("");
+
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -53,17 +58,27 @@ const AttendanceManagement = () => {
     };
 
     const handleSubmit = async () => {
+        if (!date) {
+            alert("Please select a date before submitting.");
+            return;
+        }
+
+        // Format the date to ISO format for the backend
+        const formattedDate = new Date(date).toISOString();
+
         const attendanceRecords = employees.map((emp) => ({
             employeeId: emp._id,
             status: attendance[emp._id] || "Absent",
         }));
+
         try {
-            await axios.post(
+            const response = await axios.post(
                 'https://ems-backend-mu.vercel.app/api/attendance/mark',
-                { date, attendanceRecords },
+                { date: formattedDate, attendanceRecords },
                 { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
             );
             alert("Attendance marked successfully!");
+            navigate("/admin-dashboard");
         } catch (error) {
             console.error("Error marking attendance:", error);
             alert("Error marking attendance.");
@@ -74,7 +89,9 @@ const AttendanceManagement = () => {
         <div className="p-6 bg-gray-50 min-h-screen">
             <h3 className="text-2xl font-semibold mb-6">Attendance Management</h3>
             <div className="mb-4">
-                <label htmlFor="date" className="block text-sm font-medium text-gray-700">Select Date:</label>
+                <label htmlFor="date" className="block text-sm font-medium text-gray-700">
+                    Select Date:
+                </label>
                 <input
                     type="date"
                     id="date"
