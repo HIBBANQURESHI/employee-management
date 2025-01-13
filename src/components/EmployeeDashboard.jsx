@@ -8,7 +8,7 @@ const EmployeeDashboard = () => {
     useEffect(() => {
         const fetchEmployeeData = async () => {
             try {
-                const response = await axios.get('https://ems-backend-mu.vercel.app/api/employee/dashboard', {
+                const response = await axios.get('http://localhost:3000/api/employee/dashboard', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },

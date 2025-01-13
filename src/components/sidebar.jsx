@@ -52,6 +52,18 @@ const Sidebar = () => {
           <span className="hidden lg:inline">Departments</span>
         </NavLink>
 
+        <NavLink
+          to="/admin-dashboard/salary/add"
+          className={({ isActive }) =>
+            `${
+              isActive ? "bg-blue-500 text-white font-semibold" : "text-gray-800"
+            } flex items-center space-x-4 block py-3 px-4 rounded text-base hover:bg-blue-100 hover:text-gray-800 transition-all duration-200`
+          }
+        >
+          <RiBuilding2Line className="text-xl" />
+          <span className="hidden lg:inline">Salary</span>
+        </NavLink>
+
         {/* Attendance Management Link */}
         <NavLink
           to="/admin-dashboard/attendance"

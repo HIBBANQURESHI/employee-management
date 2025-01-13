@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '../context/authContext';
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <div className="font-normal text-lg flex items-center justify-between h-16 bg-gray-200 px-4 sm:px-8 text-gray-800 shadow-sm">
@@ -14,7 +14,7 @@ const Navbar = () => {
       {/* Logout button */}
       <button
         className="px-4 py-2 bg-red-500 text-white rounded-md font-medium hover:bg-blue-400 transition"
-        onClick={() => window.location.href = '/login'}
+        onClick={logout}
       >
         Logout
       </button>

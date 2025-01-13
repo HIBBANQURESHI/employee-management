@@ -14,7 +14,7 @@ const AttendanceManagement = () => {
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
-                const response = await axios.get('https://ems-backend-mu.vercel.app/api/employee', {
+                const response = await axios.get('http://localhost:3000/api/employee', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
@@ -32,7 +32,7 @@ const AttendanceManagement = () => {
     const fetchAttendance = async (selectedDate) => {
         try {
             const response = await axios.get(
-                `https://ems-backend-mu.vercel.app/api/attendance/${selectedDate}`,
+                `http://localhost:3000/api/attendance/${selectedDate}`,
                 { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
             );
             if (response.data.success) {
@@ -73,7 +73,7 @@ const AttendanceManagement = () => {
 
         try {
             const response = await axios.post(
-                'https://ems-backend-mu.vercel.app/api/attendance/mark',
+                'http://localhost:3000/api/attendance/mark',
                 { date: formattedDate, attendanceRecords },
                 { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
             );

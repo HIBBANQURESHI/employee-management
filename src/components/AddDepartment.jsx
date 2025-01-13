@@ -19,7 +19,7 @@ const AddDepartment = () => {
         e.preventDefault();
         try {
             const response = await axios.post(
-                'https://ems-backend-mu.vercel.app/api/department/add',
+                'http://localhost:3000/api/department/add',
                 department,
                 {
                     headers: {

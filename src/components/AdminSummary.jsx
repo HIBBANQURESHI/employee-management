@@ -30,7 +30,7 @@ const AdminSummary = () => {
     // Fetch employee count
     const fetchEmployeeCount = async () => {
       try {
-        const response = await axios.get('https://ems-backend-mu.vercel.app/api/employee', {
+        const response = await axios.get('http://localhost:3000/api/employee', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -46,7 +46,7 @@ const AdminSummary = () => {
     // Fetch department count
     const fetchDepartmentCount = async () => {
       try {
-        const response = await axios.get('https://ems-backend-mu.vercel.app/api/department', {
+        const response = await axios.get('http://localhost:3000/api/department', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },

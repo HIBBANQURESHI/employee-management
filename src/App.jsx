@@ -12,6 +12,8 @@ import EmployeeAdd from "./components/EmployeeAdd";
 import EmployeesView from "./components/EmployeesView";
 import EmployeeEdit from "./components/EmployeeEdit";
 import AttendanceManagement from "./components/AttendanceManagement";
+import SalaryAdd from "./components/SalaryAdd";
+import SalaryView from "./components/SalaryView";
 //import EmployeeDashboard from './components/EmployeeDashboard';
 
 
@@ -39,6 +41,11 @@ function App() {
            <Route path = "/admin-dashboard/add-employee" element = {<EmployeeAdd/>}></Route>
            <Route path = "/admin-dashboard/employees/:id" element = {<EmployeesView/>}></Route>
            <Route path = "/admin-dashboard/employees/edit/:id" element = {<EmployeeEdit/>}></Route>
+
+           <Route path = "/admin-dashboard/salary/add" element = {<SalaryAdd/>}></Route>
+           <Route path = "/admin-dashboard/employees/salary/:id" element = {<SalaryView/>}></Route>
+
+
 
            <Route path="/admin-dashboard/attendance" element={<AttendanceManagement/>} />
 

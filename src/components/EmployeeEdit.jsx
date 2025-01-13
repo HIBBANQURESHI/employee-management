@@ -18,7 +18,7 @@ const EmployeeEdit = () => {
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const response = await axios.get(`https://ems-backend-mu.vercel.app/api/employee/${id}`, {
+        const response = await axios.get(`http://localhost:3000/api/employee/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -64,7 +64,7 @@ const EmployeeEdit = () => {
 
     try {
       const response = await axios.put(
-        `https://ems-backend-mu.vercel.app/api/employee/${id}`,
+        `http://localhost:3000/api/employee/${id}`,
         formData, // Send formData instead of employee state
         {
           headers: {
