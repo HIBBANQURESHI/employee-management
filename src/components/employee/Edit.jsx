@@ -86,13 +86,13 @@ const Edit = () => {
   return (
     <>
       {departments && employee ? (
-        <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
-          <h2 className="text-2xl font-bold mb-6">Edit Employee</h2>
+        <div className="max-w-4xl mx-auto mt-10 bg-gray-800 p-8 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-semibold text-white mb-6">Edit Employee</h2>
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-300">
                   Name
                 </label>
                 <input
@@ -100,23 +100,22 @@ const Edit = () => {
                   name="name"
                   value={employee.name}
                   onChange={handleChange}
-                  placeholder="Insert Name"
-                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                  placeholder="Enter Name"
+                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-teal-500 bg-gray-700"
                   required
                 />
               </div>
 
               {/* Marital Status */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-300">
                   Marital Status
                 </label>
                 <select
                   name="maritalStatus"
                   onChange={handleChange}
                   value={employee.maritalStatus}
-                  placeholder="Marital Status"
-                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-teal-500 bg-gray-700"
                   required
                 >
                   <option value="">Select Status</option>
@@ -127,46 +126,46 @@ const Edit = () => {
 
               {/* Designation */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-300">
                   Designation
                 </label>
                 <input
                   type="text"
                   name="designation"
-                  onChange={handleChange}
                   value={employee.designation}
-                  placeholder="Designation"
-                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Enter Designation"
+                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-teal-500 bg-gray-700"
                   required
                 />
               </div>
 
               {/* Salary */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-300">
                   Salary
                 </label>
                 <input
                   type="number"
                   name="salary"
-                  onChange={handleChange}
                   value={employee.salary}
-                  placeholder="Salary"
-                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                  onChange={handleChange}
+                  placeholder="Enter Salary"
+                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-teal-500 bg-gray-700"
                   required
                 />
               </div>
 
               {/* Department */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-300">
                   Department
                 </label>
                 <select
                   name="department"
                   onChange={handleChange}
                   value={employee.department}
-                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-teal-500 bg-gray-700"
                   required
                 >
                   <option value="">Select Department</option>
@@ -181,14 +180,14 @@ const Edit = () => {
 
             <button
               type="submit"
-              className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+              className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300"
             >
               Edit Employee
             </button>
           </form>
         </div>
       ) : (
-        <div>Loading...</div>
+        <div className="text-center text-white">Loading...</div>
       )}
     </>
   );

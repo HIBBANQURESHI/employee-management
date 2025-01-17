@@ -1,3 +1,133 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Root Variables for Light & Dark Mode */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #0d9488; /* Teal for buttons and highlights */
+  --secondary: #f97316; /* Orange for secondary actions */
+  --accent: #4ade80; /* Green for success states */
+  --error: #ef4444; /* Red for error states */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --primary: #2dd4bf;
+    --secondary: #fb923c;
+    --accent: #86efac;
+    --error: #f87171;
+  }
+}
+
+/* Global Styles */
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.5;
+  transition: background 0.3s, color 0.3s; /* Smooth transition for theme changes */
+}
+
+/* Reset & Utility */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll caused by large elements */
+}
+
+/* Responsive Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (max-width: 1024px) {
+  /* Tablet styles */
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Mobile specific styles */
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* AOS Animations */
+[data-aos] {
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+/* Reusable Button Styles */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover, #0f766e);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-hover, #ea580c);
+}
+
+/* Reusable Card Styles */
+.card {
+  background-color: var(--background);
+  border: 1px solid var(--foreground);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Shadows */
+.shadow {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-hover:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Accessible Focus Outline */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

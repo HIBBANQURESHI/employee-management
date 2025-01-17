@@ -3,43 +3,47 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddDepartment = () => {
-    const [department, setDepartment] = useState({
-        dep_name: '',
-        description: ''
-    })
-    const navigate = useNavigate()
+  const [department, setDepartment] = useState({
+    dep_name: "",
+    description: "",
+  });
+  const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setDepartment({...department, [name] : value})
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDepartment({ ...department, [name]: value });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        try {
-            const response = await axios.post('http://localhost:5000/api/department/add', department, {
-                headers: {
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
-                }
-            })
-            if(response.data.success) {
-                navigate("/admin-dashboard/departments")
-            }
-        } catch(error) {
-            if(error.response && !error.response.data.success) {
-                alert(error.response.data.error)
-            }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/department/add",
+        department,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
+      );
+      if (response.data.success) {
+        navigate("/admin-dashboard/departments");
+      }
+    } catch (error) {
+      if (error.response && !error.response.data.success) {
+        alert(error.response.data.error);
+      }
     }
+  };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md w-96">
-      <h2 className="text-2xl font-bold mb-6">Add New Department</h2>
+    <div className="max-w-2xl mx-auto mt-12 bg-gray-800 text-white p-8 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold text-center mb-6">Add New Department</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="mb-6">
           <label
             htmlFor="dep_name"
-            className="text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-300"
           >
             Department Name
           </label>
@@ -47,31 +51,31 @@ const AddDepartment = () => {
             type="text"
             name="dep_name"
             onChange={handleChange}
-            placeholder="Department Name"
-            className="mt-1 w-full p-2 border border-gray-300 rounded-md"
+            placeholder="Enter Department Name"
+            className="mt-2 w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-200"
             required
           />
         </div>
 
-        <div className="mt-3">
+        <div className="mb-6">
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-300"
           >
             Description
           </label>
           <textarea
             name="description"
-            placeholder="Description"
+            placeholder="Enter Description"
             onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+            className="mt-2 w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-200"
             rows="4"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+          className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-md transition-all duration-300 ease-in-out"
         >
           Add Department
         </button>

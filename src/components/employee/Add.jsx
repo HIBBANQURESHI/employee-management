@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Add = () => {
   const [departments, setDepartments] = useState([]);
   const [formData, setFormData] = useState({});
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getDepartments = async () => {
@@ -28,10 +28,10 @@ const Add = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formDataObj = new FormData()
+    const formDataObj = new FormData();
     Object.keys(formData).forEach((key) => {
-        formDataObj.append(key, formData[key])
-    })
+      formDataObj.append(key, formData[key]);
+    });
 
     try {
       const response = await axios.post(
@@ -51,83 +51,71 @@ const Add = () => {
         alert(error.response.data.error);
       }
     }
-      
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Add New Employee</h2>
+    <div className="max-w-4xl mx-auto mt-10 bg-gray-800 text-white p-8 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-semibold mb-6 text-center">Add New Employee</h2>
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Name
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Name</label>
             <input
               type="text"
               name="name"
               onChange={handleChange}
               placeholder="Insert Name"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             />
           </div>
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Email</label>
             <input
               type="email"
               name="email"
               onChange={handleChange}
               placeholder="Insert Email"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             />
           </div>
 
           {/* Employee ID */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Employee ID
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Employee ID</label>
             <input
               type="text"
               name="employeeId"
               onChange={handleChange}
               placeholder="Employee ID"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             />
           </div>
 
           {/* Date of Birth */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Date of Birth
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Date of Birth</label>
             <input
               type="date"
               name="dob"
               onChange={handleChange}
-              placeholder="DOB"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             />
           </div>
 
           {/* Gender */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Gender
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Gender</label>
             <select
               name="gender"
               onChange={handleChange}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             >
               <option value="">Select Gender</option>
@@ -139,14 +127,11 @@ const Add = () => {
 
           {/* Marital Status */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Marital Status
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Marital Status</label>
             <select
               name="maritalStatus"
               onChange={handleChange}
-              placeholder="Marital Status"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             >
               <option value="">Select Status</option>
@@ -157,28 +142,24 @@ const Add = () => {
 
           {/* Designation */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Designation
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Designation</label>
             <input
               type="text"
               name="designation"
               onChange={handleChange}
               placeholder="Designation"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             />
           </div>
 
           {/* Department */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Department
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Department</label>
             <select
               name="department"
               onChange={handleChange}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             >
               <option value="">Select Department</option>
@@ -192,43 +173,37 @@ const Add = () => {
 
           {/* Salary */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Salary
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Salary</label>
             <input
               type="number"
               name="salary"
               onChange={handleChange}
               placeholder="Salary"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             />
           </div>
 
           {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Password</label>
             <input
               type="password"
               name="password"
               placeholder="******"
               onChange={handleChange}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             />
           </div>
 
           {/* Role */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Role
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Role</label>
             <select
               name="role"
               onChange={handleChange}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             >
               <option value="">Select Role</option>
@@ -239,23 +214,20 @@ const Add = () => {
 
           {/* Image Upload */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Upload Image
-            </label>
+            <label className="block text-sm font-medium text-gray-300">Upload Image</label>
             <input
               type="file"
               name="image"
               onChange={handleChange}
-              placeholder="Upload Image"
               accept="image/*"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+              className="mt-2 p-3 w-full border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
         </div>
 
         <button
           type="submit"
-          className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+          className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
         >
           Add Employee
         </button>

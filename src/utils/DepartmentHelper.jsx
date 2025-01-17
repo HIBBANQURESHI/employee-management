@@ -9,7 +9,7 @@ export const columns = [
   {
     name: "Department Name",
     selector: (row) => row.dep_name,
-    sortable: true
+    sortable: true,
   },
   {
     name: "Action",
@@ -21,7 +21,7 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
   const navigate = useNavigate();
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Do you want to delte?");
+    const confirm = window.confirm("Do you want to delete?");
     if (confirm) {
       try {
         const responnse = await axios.delete(
@@ -42,16 +42,21 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
       }
     }
   };
+
   return (
     <div className="flex space-x-3">
       <button
-        className="px-3 py-1 bg-teal-600  text-white"
+        className="px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md shadow-md 
+        hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 
+        transition-all duration-200"
         onClick={() => navigate(`/admin-dashboard/department/${Id}`)}
       >
         Edit
       </button>
       <button
-        className="px-3 py-1 bg-red-600 text-white"
+        className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md shadow-md 
+        hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 
+        transition-all duration-200"
         onClick={() => handleDelete(Id)}
       >
         Delete
