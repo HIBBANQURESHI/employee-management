@@ -38,15 +38,12 @@ const Login = () => {
   return (
     <div
       className="flex flex-col items-center h-screen justify-center 
-        bg-gradient-to-r from-teal-500 to-gray-200 p-4"
+        bg-sky-300 p-4"
     >
-      <h1 className="font-pacifico text-4xl text-white mb-6 drop-shadow-lg">
-        Employee Management System
+      <h1 className="font-extrabold text-5xl text-white mb-6 drop-shadow-xl">
+        AKC Employee Management System
       </h1>
-      <div className="w-full max-w-sm bg-white rounded-lg shadow-lg p-8">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
-          Login
-        </h2>
+      <div className="w-full max-w-sm bg-transparent rounded-lg  p-8">
         {error && (
           <p className="text-red-500 text-sm text-center mb-4">{error}</p>
         )}
@@ -57,7 +54,7 @@ const Login = () => {
             </label>
             <input
               type="email"
-              className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-4 focus:ring-black"
               placeholder="Enter Email"
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -72,7 +69,7 @@ const Login = () => {
             </label>
             <input
               type="password"
-              className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-4 focus:ring-black"
               placeholder="*****"
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -88,7 +85,7 @@ const Login = () => {
             </label>
             <a
               href="#"
-              className="text-teal-600 hover:underline text-sm font-medium"
+              className="text-black hover:underline text-sm font-medium"
             >
               Forgot password?
             </a>
@@ -96,7 +93,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg font-semibold transition duration-300"
+              className="w-full bg-black hover:bg-gray-700 text-sky-300 py-2 rounded-lg font-semibold transition duration-300"
             >
               Login
             </button>

@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        "pacific" : ["Pacifico", 'sans-serif']
-      }
+        sans: ['var(--font-poppins)', 'sans-serif'], // Use the CSS variable
+      },
     },
   },
   plugins: [],

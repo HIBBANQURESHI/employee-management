@@ -29,7 +29,6 @@ body {
   background: var(--background);
   font-family: 'Poppins', sans-serif;
   line-height: 1.5;
-  transition: background 0.3s, color 0.3s; /* Smooth transition for theme changes */
 }
 
 /* Reset & Utility */
