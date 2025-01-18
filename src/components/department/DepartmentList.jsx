@@ -55,7 +55,7 @@ const DepartmentList = () => {
   return (
     <>
       {depLoading ? (
-        <div className="p-10 text-center text-white">Loading...</div>
+        <div className="p-10 text-center text-sky-600">Loading...</div>
       ) : (
         <div className="p-6 rounded-lg shadow-md">
           <div className="text-center mb-6">
@@ -65,12 +65,12 @@ const DepartmentList = () => {
             <input
               type="text"
               placeholder="Search By Department Name"
-              className="px-4 py-2 bg-white border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-200"
+              className="px-4 py-2 bg-white border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-black transition-all duration-200"
               onChange={filterDepartments}
             />
             <Link
               to="/admin-dashboard/add-department"
-              className="px-5 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all duration-200"
+              className="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-teal-700 transition-all duration-200"
             >
               Add New Department
             </Link>

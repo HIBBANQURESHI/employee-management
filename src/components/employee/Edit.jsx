@@ -86,13 +86,13 @@ const Edit = () => {
   return (
     <>
       {departments && employee ? (
-        <div className="max-w-4xl mx-auto mt-10 bg-gray-800 p-8 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-semibold text-white mb-6">Edit Employee</h2>
+        <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-lg">
+          <h2 className="text-3xl font-semibold text-black mb-6">Edit Employee</h2>
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-300">
+                <label className="block text-sm font-medium text-black">
                   Name
                 </label>
                 <input
@@ -101,21 +101,21 @@ const Edit = () => {
                   value={employee.name}
                   onChange={handleChange}
                   placeholder="Enter Name"
-                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-teal-500 bg-gray-700"
+                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-black focus:ring-2 focus:ring-black bg-white"
                   required
                 />
               </div>
 
               {/* Marital Status */}
               <div>
-                <label className="block text-sm font-medium text-gray-300">
+                <label className="block text-sm font-medium text-black">
                   Marital Status
                 </label>
                 <select
                   name="maritalStatus"
                   onChange={handleChange}
                   value={employee.maritalStatus}
-                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-teal-500 bg-gray-700"
+                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-black focus:ring-2 focus:ring-black bg-white"
                   required
                 >
                   <option value="">Select Status</option>
@@ -126,7 +126,7 @@ const Edit = () => {
 
               {/* Designation */}
               <div>
-                <label className="block text-sm font-medium text-gray-300">
+                <label className="block text-sm font-medium text-black">
                   Designation
                 </label>
                 <input
@@ -135,14 +135,14 @@ const Edit = () => {
                   value={employee.designation}
                   onChange={handleChange}
                   placeholder="Enter Designation"
-                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-teal-500 bg-gray-700"
+                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-black focus:ring-2 focus:ring-black bg-white"
                   required
                 />
               </div>
 
               {/* Salary */}
               <div>
-                <label className="block text-sm font-medium text-gray-300">
+                <label className="block text-sm font-medium text-black">
                   Salary
                 </label>
                 <input
@@ -151,21 +151,21 @@ const Edit = () => {
                   value={employee.salary}
                   onChange={handleChange}
                   placeholder="Enter Salary"
-                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-teal-500 bg-gray-700"
+                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-black focus:ring-2 focus:ring-black bg-white"
                   required
                 />
               </div>
 
               {/* Department */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-gray-300">
+                <label className="block text-sm font-medium text-black">
                   Department
                 </label>
                 <select
                   name="department"
                   onChange={handleChange}
                   value={employee.department}
-                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-teal-500 bg-gray-700"
+                  className="mt-2 p-3 w-full border border-gray-700 rounded-lg text-black focus:ring-2 focus:ring-black bg-white"
                   required
                 >
                   <option value="">Select Department</option>
@@ -180,7 +180,7 @@ const Edit = () => {
 
             <button
               type="submit"
-              className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300"
+              className="w-full mt-6 bg-sky-700 hover:bg-sky-950 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300"
             >
               Edit Employee
             </button>

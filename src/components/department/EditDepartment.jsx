@@ -65,13 +65,13 @@ const EditDepartment = () => {
   return (
     <>
       {depLoading ? (
-        <div className="text-center text-white">Loading...</div>
+        <div className="text-center text-blue-500">Loading...</div>
       ) : (
-        <div className="max-w-3xl mx-auto mt-10 bg-gray-800 p-8 rounded-md shadow-lg w-full">
-          <h2 className="text-2xl font-semibold text-white mb-6">Edit Department</h2>
+        <div className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-md shadow-lg w-full">
+          <h2 className="text-2xl font-semibold text-black mb-6">Edit Department</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="dep_name" className="text-sm font-medium text-gray-300">
+              <label htmlFor="dep_name" className="text-sm font-medium text-black">
                 Department Name
               </label>
               <input
@@ -80,13 +80,13 @@ const EditDepartment = () => {
                 onChange={handleChange}
                 value={department.dep_name}
                 placeholder="Department Name"
-                className="mt-1 w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="mt-1 w-full p-3 bg-white text-black border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                 required
               />
             </div>
 
             <div className="mb-6">
-              <label htmlFor="description" className="block text-sm font-medium text-gray-300">
+              <label htmlFor="description" className="block text-sm font-medium text-black">
                 Description
               </label>
               <textarea
@@ -94,14 +94,14 @@ const EditDepartment = () => {
                 placeholder="Description"
                 onChange={handleChange}
                 value={department.description}
-                className="mt-1 p-3 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="mt-1 p-3 bg-white text-black border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                 rows="4"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-teal-600 text-white font-semibold rounded-md hover:bg-teal-700 transition-all duration-200"
+              className="w-full py-2 px-4 bg-sky-700 text-white font-semibold rounded-md hover:bg-sky-950 transition-all duration-200"
             >
               Edit Department
             </button>

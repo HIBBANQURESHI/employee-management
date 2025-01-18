@@ -46,8 +46,8 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
   return (
     <div className="flex space-x-3">
       <button
-        className="px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md shadow-md 
-        hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 
+        className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-md 
+        hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 
         transition-all duration-200"
         onClick={() => navigate(`/admin-dashboard/department/${Id}`)}
       >
@@ -55,7 +55,7 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
       </button>
       <button
         className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md shadow-md 
-        hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 
+        hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 
         transition-all duration-200"
         onClick={() => handleDelete(Id)}
       >

@@ -37,13 +37,13 @@ const AddDepartment = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-12 bg-gray-800 text-white p-8 rounded-lg shadow-lg">
-      <h2 className="text-3xl font-bold text-center mb-6">Add New Department</h2>
+    <div className="max-w-2xl mx-auto mt-12 bg-white bg-opacity-30 backdrop-blur-lg text-white p-8 rounded-lg ">
+      <h2 className="text-3xl font-bold text-center mb-6 text-black">Add New Department</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-6">
           <label
             htmlFor="dep_name"
-            className="block text-sm font-medium text-gray-300"
+            className="block text-sm font-medium text-black"
           >
             Department Name
           </label>
@@ -52,7 +52,7 @@ const AddDepartment = () => {
             name="dep_name"
             onChange={handleChange}
             placeholder="Enter Department Name"
-            className="mt-2 w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-200"
+            className="mt-2 w-full p-3 bg-white border border-black rounded-md text-black focus:outline-none focus:ring-2 focus:ring-black transition-all duration-200"
             required
           />
         </div>
@@ -60,7 +60,7 @@ const AddDepartment = () => {
         <div className="mb-6">
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-gray-300"
+            className="block text-sm font-medium text-black"
           >
             Description
           </label>
@@ -68,14 +68,14 @@ const AddDepartment = () => {
             name="description"
             placeholder="Enter Description"
             onChange={handleChange}
-            className="mt-2 w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-200"
+            className="mt-2 w-full p-3 bg-white border border-black rounded-md text-black focus:outline-none focus:ring-2 focus:ring-black transition-all duration-200"
             rows="4"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-md transition-all duration-300 ease-in-out"
+          className="w-full py-3 bg-sky-700 hover:bg-sky-950 text-white font-semibold rounded-md transition-all duration-300 ease-in-out"
         >
           Add Department
         </button>

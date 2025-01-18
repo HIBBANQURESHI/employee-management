@@ -56,17 +56,17 @@ const Detail = () => {
   return (
     <>
       {leave ? (
-        <div className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-md shadow-lg">
-          <h2 className="text-3xl font-semibold mb-8 text-center text-teal-600">
+        <div className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-md">
+          <h2 className="text-3xl font-semibold mb-8 text-center text-black">
             Leave Details
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-16">
             {/* Profile Image */}
             <div className="flex justify-center">
               <img
                 src={`http://localhost:5000/${leave.employeeId.userId.profileImage}`}
                 alt="Profile"
-                className="rounded-full border-4 border-teal-600 w-48 h-48 object-cover"
+                className="rounded-full border-4 border-sky-300 w-48 h-48 object-cover"
               />
             </div>
 
@@ -74,49 +74,49 @@ const Detail = () => {
             <div>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
-                  <p className="text-lg font-semibold text-gray-800">Name:</p>
-                  <p className="text-lg font-medium">{leave.employeeId.userId.name}</p>
+                  <p className="text-xl font-semibold text-sky-300">Name:</p>
+                  <p className="text-black text-xl font-medium">{leave.employeeId.userId.name}</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <p className="text-lg font-semibold text-gray-800">Employee ID:</p>
-                  <p className="text-lg font-medium">{leave.employeeId.employeeId}</p>
+                  <p className="text-xl font-semibold text-sky-300">Employee ID:</p>
+                  <p className="text-black text-xl font-medium">{leave.employeeId.employeeId}</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <p className="text-lg font-semibold text-gray-800">Leave Type:</p>
-                  <p className="text-lg font-medium">{leave.leaveType}</p>
+                  <p className="text-xl font-semibold text-sky-300">Leave Type:</p>
+                  <p className="text-black text-xl font-medium">{leave.leaveType}</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <p className="text-lg font-semibold text-gray-800">Reason:</p>
-                  <p className="text-lg font-medium">{leave.reason}</p>
+                  <p className="text-xl font-semibold text-sky-300">Reason:</p>
+                  <p className="text-black text-xl font-medium">{leave.reason}</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <p className="text-lg font-semibold text-gray-800">Department:</p>
-                  <p className="text-lg font-medium">{leave.employeeId.department}</p>
+                  <p className="text-xl font-semibold text-sky-300">Department:</p>
+                  <p className="text-black text-xl font-medium">{leave.employeeId.department}</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <p className="text-lg font-semibold text-gray-800">Start Date:</p>
-                  <p className="text-lg font-medium">{new Date(leave.startDate).toLocaleDateString()}</p>
+                  <p className="text-xl font-semibold text-sky-300">Start Date:</p>
+                  <p className="text-black text-xl font-medium">{new Date(leave.startDate).toLocaleDateString()}</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <p className="text-lg font-semibold text-gray-800">End Date:</p>
-                  <p className="text-lg font-medium">{new Date(leave.endDate).toLocaleDateString()}</p>
+                  <p className="text-xl font-semibold text-sky-300">End Date:</p>
+                  <p className="text-black text-xl font-medium">{new Date(leave.endDate).toLocaleDateString()}</p>
                 </div>
 
                 {/* Status / Action Buttons */}
                 <div className="flex items-center space-x-3">
-                  <p className="text-lg font-semibold text-gray-800">
+                  <p className="text-xl font-semibold text-gray-800">
                     {leave.status === "Pending" ? "Action:" : "Status:"}
                   </p>
                   {leave.status === "Pending" ? (
                     <div className="flex space-x-4">
                       <button
-                        className="px-4 py-2 bg-teal-600 text-white font-semibold rounded-md hover:bg-teal-700 focus:outline-none"
+                        className="px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-teal-700 focus:outline-none"
                         onClick={() => changeStatus(leave._id, "Approved")}
                       >
                         Approve
                       </button>
                       <button
-                        className="px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 focus:outline-none"
+                        className="px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-700 focus:outline-none"
                         onClick={() => changeStatus(leave._id, "Rejected")}
                       >
                         Reject

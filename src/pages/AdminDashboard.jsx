@@ -8,9 +8,9 @@ const AdminDashboard = () => {
   const { user } = useAuth();
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-white">
       {/* Sidebar */}
-      <AdminSidebar className="fixed top-0 left-0 w-64 h-screen bg-teal-700 text-white shadow-lg z-20" />
+      <AdminSidebar className="fixed top-0 left-0 w-64 h-screen bg-sky-300 text-white shadow-lg z-20" />
 
       {/* Main Content */}
       <div className="flex-1 ml-64">

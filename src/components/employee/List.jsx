@@ -62,18 +62,18 @@ const List = () => {
     return (
         <div className='p-6'>
             <div className="text-center">
-                <h3 className="text-2xl font-semibold text-black mb-6">Manage Employee</h3>
+                <h3 className="text-3xl font-semibold text-black mb-6">Manage Employee</h3>
             </div>
             <div className="flex justify-between items-center mb-6">
                 <input
                     type="text"
                     placeholder="Search By Name"
-                    className="px-4 py-2 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="px-4 py-2 border border-gray-600 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                     onChange={handleFilter}
                 />
                 <Link
                     to="/admin-dashboard/add-employee"
-                    className="px-4 py-2 bg-teal-600 text-white font-semibold rounded-md hover:bg-teal-700 transition-all duration-200"
+                    className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-teal-700 transition-all duration-200"
                 >
                     Add New Employee
                 </Link>
