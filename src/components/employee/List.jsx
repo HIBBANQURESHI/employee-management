@@ -26,12 +26,17 @@ const List = () => {
                     const data = await response.data.employees.map((emp) => ({
                         _id: emp._id,
                         sno: sno++,
-                        dep_name: emp.department,
-                        name: emp.userId.name,
+                        dep_name: emp.department ? emp.department.dep_name : 'Unknown',  // Ensure dep_name is a string
+                        name: emp.userId.name,  // String, no issues here
                         dob: new Date(emp.dob).toLocaleDateString(),
-                        profileImage: <img width={40} className='rounded-full' src={`http://localhost:5000/${emp.userId.profileImage}`} />,
+                        profileImage: emp.userId.profileImage ? (
+                          <img width={40} className='rounded-full' src={`http://localhost:5000/${emp.userId.profileImage}`} alt="profile" />
+                        ) : (
+                          <span>No Image</span> // Fallback if no image exists
+                        ),
                         action: (<EmployeeButtons Id={emp._id} />),
                     }));
+                    
                     setEmployees(data);
                     setFilteredEmployees(data);
                 }
