@@ -8,6 +8,9 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";  // Changed icons to AI set
 import { TbLayoutDashboard } from "react-icons/tb";
+import { PiUserCheck } from "react-icons/pi";
+
+
 
 
 const AdminSidebar = () => {
@@ -87,6 +90,21 @@ const AdminSidebar = () => {
           <AiOutlineDollarCircle className="text-xl" />
           <span className="text-xl font-medium">Salary</span>
         </NavLink>
+
+        {/* Attendance */}
+        <NavLink
+          to="/admin-dashboard/attendance"
+          className={({ isActive }) =>
+            `${
+              isActive
+                ? "bg-sky-600 text-white shadow-xl"
+                : "text-black hover:bg-sky-500 hover:text-white"
+            } flex items-center space-x-4 py-2 px-4 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105`}
+        >
+          <PiUserCheck className="text-xl" />
+          <span className="text-xl font-medium">Attendance</span>
+        </NavLink>
+
 
         {/* Settings */}
         <NavLink
