@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 const Attendance = () => {
     const [employees, setEmployees] = useState([]);
@@ -46,10 +48,13 @@ const Attendance = () => {
     }, []);
 
     const handleAttendanceChange = (empId, status) => {
+        if (!empId || !status) return;
+    
         setAttendanceData((prevData) => {
-            const existing = prevData.find(item => item.empId === empId);
+            const existing = prevData.find((item) => item.empId === empId);
+    
             if (existing) {
-                return prevData.map(item =>
+                return prevData.map((item) =>
                     item.empId === empId ? { ...item, status } : item
                 );
             } else {
@@ -57,28 +62,40 @@ const Attendance = () => {
             }
         });
     };
+    
+    
+    
 
     const handleSubmitAttendance = async () => {
-        console.log(attendanceData); // Check the structure of the data being sent
+        console.log("Sending Attendance Data:", attendanceData);
+    
         try {
             const response = await axios.post(
-                'http://localhost:5000/api/attendance/mark',
-                { attendanceData },  // Send the attendance data array here
+                "http://localhost:5000/api/attendance/mark",
+                { attendanceData },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
                 }
             );
+    
             if (response.data.success) {
-                alert('Attendance marked successfully');
-                setAttendanceData([]); // Clear attendance data after submitting
+                alert("Attendance marked successfully");
+                setAttendanceData([]);
             }
         } catch (error) {
-            console.log('Error:', error.message);
-            alert('Error marking attendance, please try again');
+            console.log("Error Response:", error.response?.data || error.message);
+    
+            if (error.response && error.response.status === 400) {
+                alert(error.response.data.message); // Show specific error message
+            } else {
+                alert("Error marking attendance, please try again.");
+            }
         }
     };
+    
+    
 
     if (empLoading) {
         return <div className="text-center text-gray-600">Loading employees...</div>;
@@ -108,6 +125,15 @@ const Attendance = () => {
                                     <option value="leave">Leave</option>
                                 </select>
                             </div>
+
+                            {/* View Attendance Button */}
+                            <Link
+                                to={`/admin-dashboard/attendance/${emp._id}`} // Link to ViewAttendance.jsx
+                                className="text-sky-900 hover:text-sky-700 font-semibold"
+                            >
+                                View Attendance
+                            </Link>
+
                         </div>
                     ))}
                     <button
