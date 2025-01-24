@@ -14,7 +14,7 @@ const List = () => {
             setEmpLoading(true)
             try {
                 const response = await axios.get(
-                    "http://localhost:5000/api/employee",
+                    "https://ems-backend-mu.vercel.app/api/employee",
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -30,7 +30,7 @@ const List = () => {
                         name: emp.userId.name,  // String, no issues here
                         dob: new Date(emp.dob).toLocaleDateString(),
                         profileImage: emp.userId.profileImage ? (
-                          <img width={40} className='rounded-full' src={`http://localhost:5000/${emp.userId.profileImage}`} alt="profile" />
+                          <img width={40} className='rounded-full' src={`https://ems-backend-mu.vercel.app/${emp.userId.profileImage}`} alt="profile" />
                         ) : (
                           <span>No Image</span> // Fallback if no image exists
                         ),

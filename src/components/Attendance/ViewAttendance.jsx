@@ -21,7 +21,7 @@ const ViewAttendance = () => {
                 ...(filterYear && { year: filterYear }),
             };
 
-            const response = await axios.get("http://localhost:5000/api/attendance/records", {
+            const response = await axios.get("https://ems-backend-mu.vercel.app/api/attendance/records", {
                 params,
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,

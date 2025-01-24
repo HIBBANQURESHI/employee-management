@@ -11,7 +11,7 @@ const Detail = () => {
     const fetchLeave = async () => {
       try {
         const responnse = await axios.get(
-          `http://localhost:5000/api/leave/detail/${id}`,
+          `https://ems-backend-mu.vercel.app/api/leave/detail/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -35,7 +35,7 @@ const Detail = () => {
   const changeStatus = async (id, status) => {
     try {
       const responnse = await axios.put(
-        `http://localhost:5000/api/leave/${id}`,
+        `https://ems-backend-mu.vercel.app/api/leave/${id}`,
         { status },
         {
           headers: {
@@ -64,7 +64,7 @@ const Detail = () => {
             {/* Profile Image */}
             <div className="flex justify-center">
               <img
-                src={`http://localhost:5000/${leave.employeeId.userId.profileImage}`}
+                src={`https://ems-backend-mu.vercel.app/${leave.employeeId.userId.profileImage}`}
                 alt="Profile"
                 className="rounded-full border-4 border-sky-300 w-48 h-48 object-cover"
               />

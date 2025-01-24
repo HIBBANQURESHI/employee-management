@@ -12,7 +12,7 @@ const Attendance = () => {
         const fetchEmployees = async () => {
             setEmpLoading(true);
             try {
-                const response = await axios.get("http://localhost:5000/api/employee", {
+                const response = await axios.get("https://ems-backend-mu.vercel.app/api/employee", {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -26,7 +26,7 @@ const Attendance = () => {
                         dep_name: emp.department ? emp.department.dep_name : 'Unknown',
                         name: emp.userId.name,
                         profileImage: emp.userId.profileImage ? (
-                            <img width={40} className="rounded-full" src={`http://localhost:5000/${emp.userId.profileImage}`} alt="profile" />
+                            <img width={40} className="rounded-full" src={`https://ems-backend-mu.vercel.app/${emp.userId.profileImage}`} alt="profile" />
                         ) : (
                             <span>No Image</span>
                         ),
@@ -71,7 +71,7 @@ const Attendance = () => {
     
         try {
             const response = await axios.post(
-                "http://localhost:5000/api/attendance/mark",
+                "https://ems-backend-mu.vercel.app/api/attendance/mark",
                 { attendanceData },
                 {
                     headers: {
