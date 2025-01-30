@@ -9,7 +9,7 @@ export const columns = [
   {
     name: "Department Name",
     selector: (row) => row.dep_name,
-    sortable: true,
+    sortable: true
   },
   {
     name: "Action",
@@ -21,11 +21,11 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
   const navigate = useNavigate();
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Do you want to delete?");
+    const confirm = window.confirm("Do you want to delte?");
     if (confirm) {
       try {
         const responnse = await axios.delete(
-          `https://ems-backend-mu.vercel.app/api/department/${id}`,
+          `http://localhost:5000/api/department/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -42,21 +42,16 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
       }
     }
   };
-
   return (
     <div className="flex space-x-3">
       <button
-        className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-md 
-        hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 
-        transition-all duration-200"
+        className="px-3 py-1 bg-teal-600  text-white"
         onClick={() => navigate(`/admin-dashboard/department/${Id}`)}
       >
         Edit
       </button>
       <button
-        className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md shadow-md 
-        hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 
-        transition-all duration-200"
+        className="px-3 py-1 bg-red-600 text-white"
         onClick={() => handleDelete(Id)}
       >
         Delete

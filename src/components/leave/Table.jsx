@@ -9,16 +9,14 @@ const Table = () => {
 
   const fetchLeaves = async () => {
     try {
-      const response = await axios.get("https://ems-backend-mu.vercel.app/api/leave", {
+      const responnse = await axios.get("http://localhost:5000/api/leave", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-  
-      if (response.data.success) {
+      if (responnse.data.success) {
         let sno = 1;
-        console.log("API response: ", response.data.leaves); // Log raw API response
-        const data = response.data.leaves.map((leave) => ({
+        const data = responnse.data.leaves.map((leave) => ({
           _id: leave._id,
           sno: sno++,
           employeeId: leave.employeeId ? leave.employeeId._id : "N/A",
@@ -33,13 +31,11 @@ const Table = () => {
         setFilteredLeaves(data);
       }
     } catch (error) {
-      console.error("Error fetching leaves: ", error);
       if (error.response && !error.response.data.success) {
         alert(error.response.data.error);
       }
     }
   };
-  
   useEffect(() => {
     fetchLeaves();
   }, []);
@@ -66,25 +62,25 @@ const Table = () => {
       {filteredLeaves ? (
         <div className="p-6">
           <div className="text-center">
-            <h3 className="text-3xl font-bold">Manage Leaves</h3>
+            <h3 className="text-2xl font-bold">Manage Leaves</h3>
           </div>
           <div className="flex justify-between items-center">
             <input
               type="text"
               placeholder="Seach By Emp Id"
-              className="px-4 py-2 border border-gray-600 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+              className="px-4 py-0.5 border"
               onChange={filterByInput}
             />
             <div className="space-x-3">
-              <button className="px-4 py-2 bg-gray-500 text-white hover:bg-gray-700 border border-gray-500 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+              <button className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
               onClick={() => filterByButton("Pending")}>
                 Pending
               </button>
-              <button className="px-4 py-2 bg-green-500 text-white hover:bg-green-700 border border-green-500 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+              <button className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
               onClick={() => filterByButton("Approved")}>
                 Approved
               </button>
-              <button className="px-4 py-2 bg-red-500 text-white hover:bg-red-700 border border-red-500 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+              <button className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
               onClick={() => filterByButton("Rejected")}>
                 Rejected
               </button>

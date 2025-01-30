@@ -1,123 +1,107 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import {
-  AiOutlineUsergroupAdd,
-  AiOutlineApartment,
-  AiOutlineCalendar,
-  AiOutlineDollarCircle,
-  AiOutlineSetting,
-} from "react-icons/ai";  // Changed icons to AI set
-import { TbLayoutDashboard } from "react-icons/tb";
-import { PiUserCheck } from "react-icons/pi";
-
-
-
+  FaBuilding,
+  FaCalendarAlt,
+  FaCogs,
+  FaMoneyBillWave,
+  FaRegCalendarAlt,
+  FaTachometerAlt,
+  FaUsers,
+} from "react-icons/fa";
+import {AiOutlineFileText} from 'react-icons/ai'
 
 const AdminSidebar = () => {
   return (
-    <div className="bg-sky-300 text-white h-screen fixed left-0 top-0 bottom-0 w-64 shadow-xl">
-      <div className="bg-sky-300 h-16 flex items-center justify-center ">
-        <h3 className="text-2xl font-semibold tracking-wide text-white">AKC Link tech</h3>
+    <div className="bg-gray-800 text-white h-screen fixed left-0 top-0 bottom-0 space-y-2 w-64">
+      <div className="bg-teal-600 h-12 flex items-center justify-center">
+        <h3 className="text-2xl text-center font-pacific">Employee MS</h3>
       </div>
-      <div className="px-4 py-6 space-y-4">
-        {/* Dashboard */}
+      <div className="px-4">
         <NavLink
           to="/admin-dashboard"
           className={({ isActive }) =>
             `${
-              isActive
-                ? "bg-sky-600 text-white shadow-xl"
-                : "text-black hover:bg-sky-500 hover:text-white"
-            } flex items-center space-x-4 py-2 px-4 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105`}
+              isActive ? "bg-teal-500 " : " "
+            } flex items-center space-x-4 block py-2.5 px-4 rounded`
+          }
           end
         >
-          <TbLayoutDashboard className="text-xl" />
-          <span className="text-xl font-medium">Dashboard</span>
+          <FaTachometerAlt />
+          <span>Dashboard</span>
         </NavLink>
-        
-        {/* Employee */}
         <NavLink
           to="/admin-dashboard/employees"
           className={({ isActive }) =>
             `${
-              isActive
-                ? "bg-sky-600 text-white shadow-xl"
-                : "text-black hover:bg-sky-500 hover:text-white"
-            } flex items-center space-x-4 py-2 px-4 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105`}
+              isActive ? "bg-teal-500 " : " "
+            } flex items-center space-x-4 block py-2.5 px-4 rounded`
+          }
         >
-          <AiOutlineUsergroupAdd className="text-xl" />
-          <span className="text-xl font-medium">Employee</span>
+          <FaUsers />
+          <span>Employee</span>
         </NavLink>
-
-        {/* Department */}
         <NavLink
           to="/admin-dashboard/departments"
           className={({ isActive }) =>
             `${
-              isActive
-                ? "bg-sky-600 text-white shadow-xl"
-                : "text-black hover:bg-sky-500 hover:text-white"
-            } flex items-center space-x-4 py-2 px-4 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105`}
+              isActive ? "bg-teal-500 " : " "
+            } flex items-center space-x-4 block py-2.5 px-4 rounded`
+          }
         >
-          <AiOutlineApartment className="text-xl" />
-          <span className="text-xl font-medium">Department</span>
+          <FaBuilding />
+          <span>Department</span>
         </NavLink>
-
-        {/* Leave */}
         <NavLink
           to="/admin-dashboard/leaves"
           className={({ isActive }) =>
             `${
-              isActive
-                ? "bg-sky-600 text-white shadow-xl"
-                : "text-black hover:bg-sky-500 hover:text-white"
-            } flex items-center space-x-4 py-2 px-4 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105`}
+              isActive ? "bg-teal-500 " : " "
+            } flex items-center space-x-4 block py-2.5 px-4 rounded`
+          }
         >
-          <AiOutlineCalendar className="text-xl" />
-          <span className="text-xl font-medium">Leave</span>
+          <FaCalendarAlt />
+          <span>Leave</span>
         </NavLink>
-
-        {/* Salary */}
         <NavLink
           to="/admin-dashboard/salary/add"
           className={({ isActive }) =>
             `${
-              isActive
-                ? "bg-sky-600 text-white shadow-xl"
-                : "text-black hover:bg-sky-500 hover:text-white"
-            } flex items-center space-x-4 py-2 px-4 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105`}
+              isActive ? "bg-teal-500 " : " "
+            } flex items-center space-x-4 block py-2.5 px-4 rounded`
+          }
         >
-          <AiOutlineDollarCircle className="text-xl" />
-          <span className="text-xl font-medium">Salary</span>
+          <FaMoneyBillWave />
+          <span>Salary</span>
         </NavLink>
-
-        {/* Attendance */}
         <NavLink
-          to="/admin-dashboard/attendance"
+          to={`/admin-dashboard/attendance`}
           className={({ isActive }) =>
             `${
-              isActive
-                ? "bg-sky-600 text-white shadow-xl"
-                : "text-black hover:bg-sky-500 hover:text-white"
-            } flex items-center space-x-4 py-2 px-4 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105`}
+              isActive ? "bg-teal-500 " : " "
+            } flex items-center space-x-4 block py-2.5 px-4 rounded`
+          }
         >
-          <PiUserCheck className="text-xl" />
-          <span className="text-xl font-medium">Attendance</span>
+          <FaRegCalendarAlt />
+          <span>Attendance</span>
         </NavLink>
-
-
-        {/* Settings */}
+        <NavLink
+          to={`/admin-dashboard/attendance-report`}
+          className={({ isActive }) =>
+            `${
+              isActive ? "bg-teal-500 " : " "
+            } flex items-center space-x-4 block py-2.5 px-4 rounded`
+          }
+        >
+          <AiOutlineFileText />
+          <span>Attendance Report</span>
+        </NavLink>
         <NavLink
           to="/admin-dashboard/setting"
-          className={({ isActive }) =>
-            `${
-              isActive
-                ? "bg-sky-600 text-white shadow-xl"
-                : "text-black hover:bg-sky-500 hover:text-white"
-            } flex items-center space-x-4 py-2 px-4 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105`}
+          className="flex items-center space-x-4 block py-2.5 px-4 rounded"
         >
-          <AiOutlineSetting className="text-xl" />
-          <span className="text-xl font-medium">Settings</span>
+          <FaCogs />
+          <span>Settings</span>
         </NavLink>
       </div>
     </div>

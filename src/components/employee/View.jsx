@@ -10,7 +10,7 @@ const View = () => {
     const fetchEmployee = async () => {
       try {
         const responnse = await axios.get(
-          `https://ems-backend-mu.vercel.app/api/employee/${id}`,
+          `http://localhost:5000/api/employee/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -29,54 +29,54 @@ const View = () => {
 
     fetchEmployee();
   }, []);
-
   return (
     <>
       {employee ? (
-        <div className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-lg">
-          <h2 className="text-3xl font-semibold text-black mb-8 text-center">
+        <div className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
+          <h2 className="text-2xl font-bold mb-8 text-center">
             Employee Details
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-16">
-            <div className="flex justify-center items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
               <img
-                src={`https://ems-backend-mu.vercel.app/${employee.userId.profileImage}`}
-                alt="Profile"
-                className="rounded-full border-4 border-sky-300 w-72 h-72 object-cover"
+                src={`http://localhost:5000/${employee.userId.profileImage}`}
+                className="rounded-full border w-72"
               />
             </div>
-            <div className="space-y-6 text-gray-300">
-              <div className="flex space-x-3">
-                <p className="text-xl font-bold text-sky-300">Name:</p>
-                <p className="font-medium text-black text-xl">{employee.userId.name}</p>
+            <div>
+              <div className="flex space-x-3 mb-5">
+                <p className="text-lg font-bold">Name:</p>
+                <p className="font-medium">{employee.userId.name}</p>
               </div>
-              <div className="flex space-x-3">
-                <p className="text-xl font-bold text-sky-300">Employee ID:</p>
-                <p className="font-medium text-black text-xl">{employee.employeeId}</p>
+              <div className="flex space-x-3 mb-5">
+                <p className="text-lg font-bold">Employee ID:</p>
+                <p className="font-medium">{employee.employeeId}</p>
               </div>
-              <div className="flex space-x-3">
-                <p className="text-xl font-bold text-sky-300">Date of Birth:</p>
-                <p className="font-medium text-black text-xl">
-                  {new Date(employee.dob).toLocaleDateString()} 
+
+              <div className="flex space-x-3 mb-5">
+                <p className="text-lg font-bold">Date of Birth:</p>
+                <p className="font-medium">
+                  {new Date(employee.dob).toLocaleDateString()}
                 </p>
               </div>
-              <div className="flex space-x-3">
-                <p className="text-xl font-bold text-sky-300">Gender:</p>
-                <p className="font-medium text-black text-xl">{employee.gender}</p>
+              <div className="flex space-x-3 mb-5">
+                <p className="text-lg font-bold">Gender:</p>
+                <p className="font-medium">{employee.gender}</p>
               </div>
-              <div className="flex space-x-3">
-                <p className="text-xl font-bold text-sky-300">Department:</p>
-                <p className="font-medium text-black text-xl">{employee.department}</p>
+
+              <div className="flex space-x-3 mb-5">
+                <p className="text-lg font-bold">Department:</p>
+                <p className="font-medium">{employee.department.dep_name}</p>
               </div>
-              <div className="flex space-x-3">
-                <p className="text-xl font-bold text-sky-300">Marital Status:</p>
-                <p className="font-medium text-black text-xl">{employee.maritalStatus}</p>
+              <div className="flex space-x-3 mb-5">
+                <p className="text-lg font-bold">Marital Status:</p>
+                <p className="font-medium">{employee.maritalStatus}</p>
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <div className="text-center text-blue-950">Loading...</div>
+        <div> Loading ....</div>
       )}
     </>
   );

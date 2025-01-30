@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-poppins)', 'sans-serif'], // Use the CSS variable
-      },
+        "Manrope": ["Manrope", "sans-serif"]
+      }
     },
   },
   plugins: [],

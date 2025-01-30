@@ -24,9 +24,9 @@ const Add = () => {
   }, []);
 
   const handleDepartment = async (e) => {
-    const emps = await getEmployees(e.target.value);
-    setEmployees(emps);
-  };
+    const emps = await getEmployees(e.target.value)
+    setEmployees(emps)
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,7 +38,7 @@ const Add = () => {
 
     try {
       const response = await axios.post(
-        `https://ems-backend-mu.vercel.app/api/salary/add`,
+        `http://localhost:5000/api/salary/add`,
         salary,
         {
           headers: {
@@ -59,17 +59,19 @@ const Add = () => {
   return (
     <>
       {departments ? (
-        <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md">
-          <h2 className="text-3xl font-semibold text-black mb-6">Add Salary</h2>
+        <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
+          <h2 className="text-2xl font-bold mb-6">Add Salary</h2>
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Department */}
-              <div>
-                <label className="block text-sm font-medium text-black">Department</label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+             {/* Department */}
+             <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Department
+                </label>
                 <select
                   name="department"
                   onChange={handleDepartment}
-                  className="mt-2 p-3 block w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-black"
+                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
                   required
                 >
                   <option value="">Select Department</option>
@@ -80,14 +82,15 @@ const Add = () => {
                   ))}
                 </select>
               </div>
-
-              {/* Employee */}
-              <div>
-                <label className="block text-sm font-medium text-gray-black">Employee</label>
+              {/* employee  */}
+             <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Employee
+                </label>
                 <select
                   name="employeeId"
                   onChange={handleChange}
-                  className="mt-2 p-3 block w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-black"
+                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
                   required
                 >
                   <option value="">Select Employee</option>
@@ -99,68 +102,74 @@ const Add = () => {
                 </select>
               </div>
 
-              {/* Basic Salary */}
+
+              {/* Designation */}
               <div>
-                <label className="block text-sm font-medium text-black">Basic Salary</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Basic Salary
+                </label>
                 <input
                   type="number"
                   name="basicSalary"
                   onChange={handleChange}
-                  placeholder="Enter basic salary"
-                  className="mt-2 p-3 block w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-black"
+                  placeholder="basix salary"
+                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
                   required
                 />
               </div>
 
-              {/* Allowances */}
+              {/* Salary */}
               <div>
-                <label className="block text-sm font-medium text-black">Allowances</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Allowances
+                </label>
                 <input
                   type="number"
                   name="allowances"
                   onChange={handleChange}
-                  placeholder="Enter allowances"
-                  className="mt-2 p-3 block w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-black"
+                  placeholder="allowances"
+                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
                   required
                 />
               </div>
-
-              {/* Deductions */}
               <div>
-                <label className="block text-sm font-medium text-black">Deductions</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Deductions
+                </label>
                 <input
                   type="number"
                   name="deductions"
                   onChange={handleChange}
-                  placeholder="Enter deductions"
-                  className="mt-2 p-3 block w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-black"
+                  placeholder="deductions"
+                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
                   required
                 />
               </div>
-
-              {/* Pay Date */}
               <div>
-                <label className="block text-sm font-medium text-black">Pay Date</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Pay Date
+                </label>
                 <input
                   type="date"
                   name="payDate"
                   onChange={handleChange}
-                  className="mt-2 p-3 block w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-black"
+                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
                   required
                 />
               </div>
+              
             </div>
 
             <button
               type="submit"
-              className="w-full mt-6 bg-sky-700 text-white font-semibold py-3 px-6 rounded-md hover:bg-sky-950 transition duration-300"
+              className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
             >
               Add Salary
             </button>
           </form>
         </div>
       ) : (
-        <div className="text-center text-xl font-semibold text-blue-500">Loading...</div>
+        <div>Loading...</div>
       )}
     </>
   );

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 export const columns = [
   {
@@ -15,13 +16,7 @@ export const columns = [
   },
   {
     name: "Image",
-    selector: (row) => (
-      <img
-        src={row.profileImage}
-        alt="Profile"
-        className="w-10 h-10 rounded-full object-cover"
-      />
-    ),
+    selector: (row) => row.profileImage,
     width: "90px",
   },
   {
@@ -45,13 +40,13 @@ export const columns = [
 export const fetchDepartments = async () => {
   let departments;
   try {
-    const response = await axios.get("https://ems-backend-mu.vercel.app/api/department", {
+    const responnse = await axios.get("http://localhost:5000/api/department", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.data.success) {
-      departments = response.data.departments;
+    if (responnse.data.success) {
+      departments = responnse.data.departments;
     }
   } catch (error) {
     if (error.response && !error.response.data.success) {
@@ -65,17 +60,17 @@ export const fetchDepartments = async () => {
 export const getEmployees = async (id) => {
   let employees;
   try {
-    const response = await axios.get(
-      `https://ems-backend-mu.vercel.app/api/employee/department/${id}`,
+    const responnse = await axios.get(
+      `http://localhost:5000/api/employee/department/${id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
-    console.log(response);
-    if (response.data.success) {
-      employees = response.data.employees;
+    console.log(responnse)
+    if (responnse.data.success) {
+      employees = responnse.data.employees;
     }
   } catch (error) {
     if (error.response && !error.response.data.success) {
@@ -89,39 +84,24 @@ export const EmployeeButtons = ({ Id }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-wrap space-x-3">
+    <div className="flex space-x-3">
       <button
-        className="px-4 py-2 text-sm font-medium text-white bg-green-800 rounded-md shadow-md 
-        hover:bg-green-950 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 
-        transition-all duration-200"
+        className="px-3 py-1 bg-teal-600 text-white"
         onClick={() => navigate(`/admin-dashboard/employees/${Id}`)}
       >
         View
       </button>
       <button
-        className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-md 
-        hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
-        transition-all duration-200"
+        className="px-3 py-1 bg-blue-600 text-white"
         onClick={() => navigate(`/admin-dashboard/employees/edit/${Id}`)}
       >
         Edit
       </button>
-      <button
-        className="px-4 py-2 text-sm font-medium text-white bg-orange-600 rounded-md shadow-md 
-        hover:bg-orange-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 
-        transition-all duration-200"
+      <button className="px-3 py-1 bg-yellow-600 text-white"
         onClick={() => navigate(`/admin-dashboard/employees/salary/${Id}`)}
-      >
-        Salary
-      </button>
-      <button
-        className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md shadow-md 
-        hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 
-        transition-all duration-200"
-        onClick={() => navigate(`/admin-dashboard/employees/leaves/${Id}`)}
-      >
-        Leave
-      </button>
+      >Salary</button>
+      <button className="px-3 py-1 bg-red-600 text-white"
+      onClick={() => navigate(`/admin-dashboard/employees/leaves/${Id}`)}>Leave</button>
     </div>
   );
 };
