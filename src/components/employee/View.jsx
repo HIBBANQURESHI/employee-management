@@ -9,16 +9,16 @@ const View = () => {
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const responnse = await axios.get(
-          `http://localhost:5000/api/employee/${id}`,
+        const response = await axios.get(
+          `https://ems-backend-mu.vercel.app/api/employee/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
-        if (responnse.data.success) {
-          setEmployee(responnse.data.employee);
+        if (response.data.success) {
+          setEmployee(response.data.employee);
         }
       } catch (error) {
         if (error.response && !error.response.data.success) {
@@ -29,54 +29,60 @@ const View = () => {
 
     fetchEmployee();
   }, []);
+
   return (
     <>
       {employee ? (
-        <div className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
-          <h2 className="text-2xl font-bold mb-8 text-center">
-            Employee Details
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <img
-                src={`http://localhost:5000/${employee.userId.profileImage}`}
-                className="rounded-full border w-72"
-              />
-            </div>
-            <div>
-              <div className="flex space-x-3 mb-5">
-                <p className="text-lg font-bold">Name:</p>
-                <p className="font-medium">{employee.userId.name}</p>
+        <div className="min-h-screen bg-gray-900 p-8">
+          <div className="max-w-3xl mx-auto bg-gray-800 p-8 rounded-md shadow-lg">
+            <h2 className="text-3xl font-bold mb-8 text-center text-white">
+              Employee Details
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex justify-center items-center">
+                <img
+                  src={`https://ems-backend-mu.vercel.app/${employee.userId.profileImage}`}
+                  className="rounded-full border-4 border-teal-600 w-72"
+                  alt="Profile"
+                />
               </div>
-              <div className="flex space-x-3 mb-5">
-                <p className="text-lg font-bold">Employee ID:</p>
-                <p className="font-medium">{employee.employeeId}</p>
-              </div>
+              <div>
+                <div className="flex space-x-3 mb-5 text-white">
+                  <p className="text-lg font-bold">Name:</p>
+                  <p className="font-medium">{employee.userId.name}</p>
+                </div>
+                <div className="flex space-x-3 mb-5 text-white">
+                  <p className="text-lg font-bold">Employee ID:</p>
+                  <p className="font-medium">{employee.employeeId}</p>
+                </div>
 
-              <div className="flex space-x-3 mb-5">
-                <p className="text-lg font-bold">Date of Birth:</p>
-                <p className="font-medium">
-                  {new Date(employee.dob).toLocaleDateString()}
-                </p>
-              </div>
-              <div className="flex space-x-3 mb-5">
-                <p className="text-lg font-bold">Gender:</p>
-                <p className="font-medium">{employee.gender}</p>
-              </div>
+                <div className="flex space-x-3 mb-5 text-white">
+                  <p className="text-lg font-bold">Date of Birth:</p>
+                  <p className="font-medium">
+                    {new Date(employee.dob).toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="flex space-x-3 mb-5 text-white">
+                  <p className="text-lg font-bold">Gender:</p>
+                  <p className="font-medium">{employee.gender}</p>
+                </div>
 
-              <div className="flex space-x-3 mb-5">
-                <p className="text-lg font-bold">Department:</p>
-                <p className="font-medium">{employee.department.dep_name}</p>
-              </div>
-              <div className="flex space-x-3 mb-5">
-                <p className="text-lg font-bold">Marital Status:</p>
-                <p className="font-medium">{employee.maritalStatus}</p>
+                <div className="flex space-x-3 mb-5 text-white">
+                  <p className="text-lg font-bold">Department:</p>
+                  <p className="font-medium">{employee.department.dep_name}</p>
+                </div>
+                <div className="flex space-x-3 mb-5 text-white">
+                  <p className="text-lg font-bold">Marital Status:</p>
+                  <p className="font-medium">{employee.maritalStatus}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <div> Loading ....</div>
+        <div className="min-h-screen bg-gray-900 text-white flex justify-center items-center">
+          <div>Loading...</div>
+        </div>
       )}
     </>
   );

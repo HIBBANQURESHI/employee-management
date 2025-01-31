@@ -9,14 +9,14 @@ const Table = () => {
 
   const fetchLeaves = async () => {
     try {
-      const responnse = await axios.get("http://localhost:5000/api/leave", {
+      const response = await axios.get("https://ems-backend-mu.vercel.app/api/leave", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      if (responnse.data.success) {
+      if (response.data.success) {
         let sno = 1;
-        const data = responnse.data.leaves.map((leave) => ({
+        const data = response.data.leaves.map((leave) => ({
           _id: leave._id,
           sno: sno++,
           employeeId: leave.employeeId ? leave.employeeId._id : "N/A",
@@ -36,6 +36,7 @@ const Table = () => {
       }
     }
   };
+
   useEffect(() => {
     fetchLeaves();
   }, []);
@@ -46,53 +47,63 @@ const Table = () => {
         .toLowerCase()
         .includes(e.target.value.toLowerCase())
     );
-    setFilteredLeaves(data)
+    setFilteredLeaves(data);
   };
+
   const filterByButton = (status) => {
     const data = leaves.filter((leave) =>
       leave.status
         .toLowerCase()
         .includes(status.toLowerCase())
     );
-    setFilteredLeaves(data)
+    setFilteredLeaves(data);
   };
 
   return (
     <>
       {filteredLeaves ? (
-        <div className="p-6">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold">Manage Leaves</h3>
+        <div className="min-h-screen bg-gray-900 text-white p-8">
+          <div className="text-center mb-6">
+            <h3 className="text-3xl font-bold">Manage Leaves</h3>
           </div>
-          <div className="flex justify-between items-center">
+
+          <div className="flex justify-between items-center mb-6">
             <input
               type="text"
-              placeholder="Seach By Emp Id"
-              className="px-4 py-0.5 border"
+              placeholder="Search By Emp Id"
+              className="px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-600"
               onChange={filterByInput}
             />
             <div className="space-x-3">
-              <button className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
-              onClick={() => filterByButton("Pending")}>
+              <button
+                className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                onClick={() => filterByButton("Pending")}
+              >
                 Pending
               </button>
-              <button className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
-              onClick={() => filterByButton("Approved")}>
+              <button
+                className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                onClick={() => filterByButton("Approved")}
+              >
                 Approved
               </button>
-              <button className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
-              onClick={() => filterByButton("Rejected")}>
+              <button
+                className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                onClick={() => filterByButton("Rejected")}
+              >
                 Rejected
               </button>
             </div>
           </div>
 
-          <div className="mt-3">
+          <div className="mt-3 bg-gray-800 p-4 rounded-md shadow-lg">
             <DataTable columns={columns} data={filteredLeaves} pagination />
           </div>
         </div>
       ) : (
-        <div>Loading ...</div>
+        <div className="min-h-screen bg-gray-900 text-white flex justify-center items-center">
+          <div>Loading ...</div>
+        </div>
       )}
     </>
   );

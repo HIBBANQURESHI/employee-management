@@ -1,91 +1,98 @@
 import React, { useEffect, useState } from "react";
 import SummaryCard from "./SummaryCard";
-import {
-  FaBuilding,
-  FaCheckCircle,
-  FaFileAlt,
-  FaHourglassHalf,
-  FaMoneyBillWave,
-  FaTimesCircle,
-  FaUsers,
-} from "react-icons/fa";
-import axios from 'axios'
+import { 
+  Users, 
+  Building2, 
+  DollarSign, 
+  FileText, 
+  CheckCircle, 
+  Hourglass, 
+  XCircle 
+} from "lucide-react";
+import axios from 'axios';
 
 const AdminSummary = () => {
-  const [summary, setSummary] = useState(null)
+  const [summary, setSummary] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const summary = await axios.get('http://localhost:5000/api/dashboard/summary', {
-          headers : {
-            "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        const response = await axios.get("https://ems-backend-mu.vercel.app/api/dashboard/summary", {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
           }
-        })
-        console.log(summary.data)
-        setSummary(summary.data)
-      } catch(error) {
-        if(error.response) {
-          alert(error.response.data.error)
-        }
-        console.log(error.messsage)
+        });
+        setSummary(response.data);
+      } catch (error) {
+        if (error.response) alert(error.response.data.error);
+        console.log(error.message);
+      } finally {
+        setLoading(false);
       }
-    }
-    fetchSummary()
-  }, [])
+    };
+    fetchSummary();
+  }, []);
 
-  if(!summary) {
-    return <div> Loading...</div>
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-teal-500 border-solid">  </div>
+      </div>
+    );
   }
 
   return (
-    <div className="p-6">
-      <h3 className="text-2xl font-bold">Dashboard Overview</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+    <div className="p-6 bg-gray-900 min-h-screen text-white">
+      {/* Dashboard Heading */}
+      <h3 className="text-3xl font-bold text-center md:text-left">Dashboard Overview</h3>
+
+      {/* Summary Cards Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8 text-black">
         <SummaryCard
-          icon={<FaUsers />}
+          icon={<Users size={24} />}
           text="Total Employees"
           number={summary.totalEmployees}
           color="bg-teal-600"
         />
         <SummaryCard
-          icon={<FaBuilding />}
+          icon={<Building2 size={24} />}
           text="Total Departments"
           number={summary.totalDepartments}
           color="bg-yellow-600"
         />
         <SummaryCard
-          icon={<FaMoneyBillWave />}
+          icon={<DollarSign size={24} />}
           text="Monthly Salary"
           number={`$${summary.totalSalary}`}
-          color="bg-red-600"
+          color="bg-orange-600"
         />
       </div>
 
+      {/* Leave Details Section */}
       <div className="mt-12">
         <h4 className="text-center text-2xl font-bold">Leave Details</h4>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mt-6 text-black">
           <SummaryCard
-            icon={<FaFileAlt />}
+            icon={<FileText size={24} />}
             text="Leave Applied"
             number={summary.leaveSummary.appliedFor}
             color="bg-teal-600"
           />
           <SummaryCard
-            icon={<FaCheckCircle />}
+            icon={<CheckCircle size={24} />}
             text="Leave Approved"
             number={summary.leaveSummary.approved}
             color="bg-green-600"
           />
           <SummaryCard
-            icon={<FaHourglassHalf />}
+            icon={<Hourglass size={24} />}
             text="Leave Pending"
             number={summary.leaveSummary.pending}
             color="bg-yellow-600"
           />
           <SummaryCard
-            icon={<FaTimesCircle />}
+            icon={<XCircle size={24} />}
             text="Leave Rejected"
             number={summary.leaveSummary.rejected}
             color="bg-red-600"

@@ -31,44 +31,55 @@ export const columns = [
   },
 ];
 
-export const AttendanceHelper = ({status, employeeId, statusChange}) => {
-    const markEmployee = async (status, employeeId) => {
-        const response = await axios.put(`http://localhost:5000/api/attendance/update/${employeeId}`, {status}, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-        })
-        if(response.data.success) {
-            statusChange()
-        }
+export const AttendanceHelper = ({ status, employeeId, statusChange }) => {
+  const markEmployee = async (status, employeeId) => {
+    const response = await axios.put(
+      `https://ems-backend-mu.vercel.app/api/attendance/update/${employeeId}`,
+      { status },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    if (response.data.success) {
+      statusChange();
     }
+  };
+
   return (
-    <div>
+    <div className="flex items-center justify-center space-x-4">
       {status == null ? (
-        <div className="flex space-x-8">
+        <div className="flex space-x-4">
           <button
-            className="px-4 py-2 bg-green-500 text-white"
-            onClick={() => markEmployee("present", employeeId)}>
+            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors duration-300"
+            onClick={() => markEmployee("present", employeeId)}
+          >
             Present
           </button>
           <button
-            className="px-4 py-2 bg-red-500 text-white"
-            onClick={() => markEmployee("absent", employeeId)}>
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-300"
+            onClick={() => markEmployee("absent", employeeId)}
+          >
             Absent
           </button>
           <button
-            className="px-4 py-2 bg-gray-500 text-white"
-            onClick={() => markEmployee("sick", employeeId)}>
+            className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-lg transition-colors duration-300"
+            onClick={() => markEmployee("sick", employeeId)}
+          >
             Sick
           </button>
           <button
-            className="px-4 py-2 bg-yellow-500 text-black"
-            onClick={() => markEmployee("leave", employeeId)}>
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-300"
+            onClick={() => markEmployee("leave", employeeId)}
+          >
             Leave
           </button>
         </div>
       ) : (
-        <p className="bg-gray-100 w-20 text-center py-2 rounded">{status}</p>
+        <p className="bg-gray-200 text-center py-2 px-4 rounded-lg text-sm font-medium text-gray-700">
+          {status.charAt(0).toUpperCase() + status.slice(1)}
+        </p>
       )}
     </div>
   );

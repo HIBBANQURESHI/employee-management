@@ -1,14 +1,27 @@
-import React from 'react'
-import { useAuth } from '../../context/authContext'
+import React from "react";
+import { useAuth } from "../../context/authContext";
+import { LogOut } from "lucide-react";
 
 const Navbar = () => {
-    const {user, logout} = useAuth()
-  return (
-    <div className='flex items-center text-white justify-between h-12 bg-teal-600 px-5'>
-        <p >Welcome {user.name}</p>
-        <button className='px-4 py-1 bg-teal-700 hover:bg-teal-800' onClick={logout}>Logout</button>
-    </div>
-  )
-}
+  const { user, logout } = useAuth();
 
-export default Navbar
+  return (
+    <nav className="flex items-center justify-between h-14 bg-gray-900 px-6 text-white shadow-md">
+      {/* Welcome Message */}
+      <p className="text-lg font-medium">
+        Welcome, <span className="font-semibold">{user.name}</span>
+      </p>
+
+      {/* Logout Button */}
+      <button
+        onClick={logout}
+        className="flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 transition-all duration-300 rounded-lg text-sm font-medium"
+      >
+        <LogOut size={18} />
+        Logout
+      </button>
+    </nav>
+  );
+};
+
+export default Navbar;

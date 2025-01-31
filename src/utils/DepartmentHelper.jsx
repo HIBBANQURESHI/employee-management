@@ -21,18 +21,18 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
   const navigate = useNavigate();
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Do you want to delte?");
+    const confirm = window.confirm("Do you want to delete?");
     if (confirm) {
       try {
-        const responnse = await axios.delete(
-          `http://localhost:5000/api/department/${id}`,
+        const response = await axios.delete(
+          `https://ems-backend-mu.vercel.app/api/department/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
-        if (responnse.data.success) {
+        if (response.data.success) {
           onDepartmentDelete();
         }
       } catch (error) {
@@ -42,16 +42,17 @@ export const DepartmentButtons = ({ Id, onDepartmentDelete }) => {
       }
     }
   };
+
   return (
     <div className="flex space-x-3">
       <button
-        className="px-3 py-1 bg-teal-600  text-white"
+        className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-md transition duration-300"
         onClick={() => navigate(`/admin-dashboard/department/${Id}`)}
       >
         Edit
       </button>
       <button
-        className="px-3 py-1 bg-red-600 text-white"
+        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md transition duration-300"
         onClick={() => handleDelete(Id)}
       >
         Delete

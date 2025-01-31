@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { fetchDepartments } from "../../utils/EmployeeHelper";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import { div } from "framer-motion/client";
 
 const Edit = () => {
   const [employee, setEmployee] = useState({
@@ -26,23 +28,23 @@ const Edit = () => {
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const responnse = await axios.get(
-          `http://localhost:5000/api/employee/${id}`,
+        const response = await axios.get(
+          `https://ems-backend-mu.vercel.app/api/employee/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
-        if (responnse.data.success) {
-          const employee = responnse.data.employee;
+        if (response.data.success) {
+          const employee = response.data.employee;
           setEmployee((prev) => ({
             ...prev,
             name: employee.userId.name,
             maritalStatus: employee.maritalStatus,
             designation: employee.designation,
             salary: employee.salary,
-            department: employee.department
+            department: employee.department,
           }));
         }
       } catch (error) {
@@ -65,7 +67,7 @@ const Edit = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/employee/${id}`,
+        `https://ems-backend-mu.vercel.app/api/employee/${id}`,
         employee,
         {
           headers: {
@@ -85,14 +87,21 @@ const Edit = () => {
 
   return (
     <>
+    <div className="bg-gray-900 min-h-screen">
       {departments && employee ? (
-        <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
-          <h2 className="text-2xl font-bold mb-6">Edit Employee</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <motion.div
+          className="max-w-4xl mx-auto mt-10 bg-gray-800 text-white p-8 rounded-md shadow-lg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <h2 className="text-2xl font-bold text-gray-100 mb-6">Edit Employee</h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-300">
                   Name
                 </label>
                 <input
@@ -101,22 +110,21 @@ const Edit = () => {
                   value={employee.name}
                   onChange={handleChange}
                   placeholder="Insert Name"
-                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                  className="mt-1 p-2 block w-full bg-gray-700 border border-gray-600 rounded-md focus:ring-teal-500 focus:border-teal-500 text-white"
                   required
                 />
               </div>
 
               {/* Marital Status */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-300">
                   Marital Status
                 </label>
                 <select
                   name="maritalStatus"
                   onChange={handleChange}
                   value={employee.maritalStatus}
-                  placeholder="Marital Status"
-                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                  className="mt-1 p-2 block w-full bg-gray-700 border border-gray-600 rounded-md focus:ring-teal-500 focus:border-teal-500 text-white"
                   required
                 >
                   <option value="">Select Status</option>
@@ -127,46 +135,46 @@ const Edit = () => {
 
               {/* Designation */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-300">
                   Designation
                 </label>
                 <input
                   type="text"
                   name="designation"
-                  onChange={handleChange}
                   value={employee.designation}
+                  onChange={handleChange}
                   placeholder="Designation"
-                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                  className="mt-1 p-2 block w-full bg-gray-700 border border-gray-600 rounded-md focus:ring-teal-500 focus:border-teal-500 text-white"
                   required
                 />
               </div>
 
               {/* Salary */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-300">
                   Salary
                 </label>
                 <input
                   type="number"
                   name="salary"
-                  onChange={handleChange}
                   value={employee.salary}
+                  onChange={handleChange}
                   placeholder="Salary"
-                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                  className="mt-1 p-2 block w-full bg-gray-700 border border-gray-600 rounded-md focus:ring-teal-500 focus:border-teal-500 text-white"
                   required
                 />
               </div>
 
               {/* Department */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-300">
                   Department
                 </label>
                 <select
                   name="department"
                   onChange={handleChange}
                   value={employee.department}
-                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                  className="mt-1 p-2 block w-full bg-gray-700 border border-gray-600 rounded-md focus:ring-teal-500 focus:border-teal-500 text-white"
                   required
                 >
                   <option value="">Select Department</option>
@@ -181,15 +189,16 @@ const Edit = () => {
 
             <button
               type="submit"
-              className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+              className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50"
             >
               Edit Employee
             </button>
           </form>
-        </div>
+        </motion.div>
       ) : (
-        <div>Loading...</div>
+        <div className="max-w-4xl mx-auto mt-10 text-center text-white">Loading...</div>
       )}
+      </div>
     </>
   );
 };

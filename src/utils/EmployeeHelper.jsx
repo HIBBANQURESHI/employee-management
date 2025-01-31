@@ -40,13 +40,13 @@ export const columns = [
 export const fetchDepartments = async () => {
   let departments;
   try {
-    const responnse = await axios.get("http://localhost:5000/api/department", {
+    const response = await axios.get("https://ems-backend-mu.vercel.app/api/department", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (responnse.data.success) {
-      departments = responnse.data.departments;
+    if (response.data.success) {
+      departments = response.data.departments;
     }
   } catch (error) {
     if (error.response && !error.response.data.success) {
@@ -60,17 +60,17 @@ export const fetchDepartments = async () => {
 export const getEmployees = async (id) => {
   let employees;
   try {
-    const responnse = await axios.get(
-      `http://localhost:5000/api/employee/department/${id}`,
+    const response = await axios.get(
+      `https://ems-backend-mu.vercel.app/api/employee/department/${id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
-    console.log(responnse)
-    if (responnse.data.success) {
-      employees = responnse.data.employees;
+    console.log(response);
+    if (response.data.success) {
+      employees = response.data.employees;
     }
   } catch (error) {
     if (error.response && !error.response.data.success) {
@@ -86,22 +86,29 @@ export const EmployeeButtons = ({ Id }) => {
   return (
     <div className="flex space-x-3">
       <button
-        className="px-3 py-1 bg-teal-600 text-white"
+        className="px-4 py-2 bg-teal-600 text-white font-semibold rounded-lg transition duration-300 transform hover:bg-teal-700 hover:scale-105"
         onClick={() => navigate(`/admin-dashboard/employees/${Id}`)}
       >
         View
       </button>
       <button
-        className="px-3 py-1 bg-blue-600 text-white"
+        className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg transition duration-300 transform hover:bg-blue-700 hover:scale-105"
         onClick={() => navigate(`/admin-dashboard/employees/edit/${Id}`)}
       >
         Edit
       </button>
-      <button className="px-3 py-1 bg-yellow-600 text-white"
+      <button
+        className="px-4 py-2 bg-yellow-600 text-white font-semibold rounded-lg transition duration-300 transform hover:bg-yellow-700 hover:scale-105"
         onClick={() => navigate(`/admin-dashboard/employees/salary/${Id}`)}
-      >Salary</button>
-      <button className="px-3 py-1 bg-red-600 text-white"
-      onClick={() => navigate(`/admin-dashboard/employees/leaves/${Id}`)}>Leave</button>
+      >
+        Salary
+      </button>
+      <button
+        className="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg transition duration-300 transform hover:bg-red-700 hover:scale-105"
+        onClick={() => navigate(`/admin-dashboard/employees/leaves/${Id}`)}
+      >
+        Leave
+      </button>
     </div>
   );
 };

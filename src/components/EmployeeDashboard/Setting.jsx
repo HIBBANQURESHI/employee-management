@@ -6,8 +6,8 @@ import { useAuth } from "../../context/authContext";
 
 const Setting = () => {
   const navigate = useNavigate();
-  const { user } = useAuth()
-    const [setting, setSetting] = useState({
+  const { user } = useAuth();
+  const [setting, setSetting] = useState({
     userId: user._id,
     oldPassword: "",
     newPassword: "",
@@ -17,17 +17,17 @@ const Setting = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-      setSetting({ ...setting, [name]: value });
+    setSetting({ ...setting, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (setting.newPassword !== setting.confirmPassword) {
-      setError("Password not matched");
+      setError("Passwords do not match");
     } else {
       try {
         const response = await axios.put(
-          "http://localhost:5000/api/setting/change-password",
+          "https://ems-backend-mu.vercel.app/api/setting/change-password",
           setting,
           {
             headers: {
@@ -37,67 +37,69 @@ const Setting = () => {
         );
         if (response.data.success) {
           navigate("/admin-dashboard/employees");
-            setError("")
+          setError("");
         }
       } catch (error) {
         if (error.response && !error.response.data.success) {
-          setError(error.response.data.error)
+          setError(error.response.data.error);
         }
       }
     }
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md w-96">
-      <h2 className="text-2xl font-bold mb-6">Change Password</h2>
-      <p className="text-red-500">{error}</p>
+    <div className="max-w-md mx-auto mt-10 bg-gray-800 p-8 rounded-lg shadow-lg w-full">
+      <h2 className="text-3xl font-semibold text-white mb-6">Change Password</h2>
+      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
       <form onSubmit={handleSubmit}>
-        {/* Department Name */}
-        <div>
-          <label className="text-sm font-medium text-gray-700">
+        <div className="mb-4">
+          <label className="text-sm font-medium text-gray-300" htmlFor="oldPassword">
             Old Password
           </label>
           <input
             type="password"
             name="oldPassword"
-            placeholder="Change Password"
+            id="oldPassword"
+            placeholder="Enter Old Password"
             onChange={handleChange}
-            className="mt-1 w-full p-2 border border-gray-300 rounded-md"
+            className="mt-2 w-full p-3 border border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-teal-500"
             required
           />
         </div>
 
-        <div>
-          <label className="text-sm font-medium text-gray-700">
+        <div className="mb-4">
+          <label className="text-sm font-medium text-gray-300" htmlFor="newPassword">
             New Password
           </label>
           <input
             type="password"
             name="newPassword"
-            placeholder="New Password"
+            id="newPassword"
+            placeholder="Enter New Password"
             onChange={handleChange}
-            className="mt-1 w-full p-2 border border-gray-300 rounded-md"
+            className="mt-2 w-full p-3 border border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-teal-500"
             required
           />
         </div>
 
-        <div>
-          <label className="text-sm font-medium text-gray-700">
+        <div className="mb-6">
+          <label className="text-sm font-medium text-gray-300" htmlFor="confirmPassword">
             Confirm Password
           </label>
           <input
             type="password"
             name="confirmPassword"
-            placeholder="Confirm Password"
+            id="confirmPassword"
+            placeholder="Confirm New Password"
             onChange={handleChange}
-            className="mt-1 w-full p-2 border border-gray-300 rounded-md"
+            className="mt-2 w-full p-3 border border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-teal-500"
             required
           />
         </div>
 
         <button
           type="submit"
-          className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+          className="w-full bg-teal-600 text-white font-semibold py-3 px-6 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-300"
         >
           Change Password
         </button>

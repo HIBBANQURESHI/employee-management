@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const AttendanceReport = () => {
   const [report, setReport] = useState({});
@@ -15,84 +16,91 @@ const AttendanceReport = () => {
       if (dateFilter) {
         query.append("date", dateFilter);
       }
-      const responnse = await axios.get(
-        `http://localhost:5000/api/attendance/report?${query.toString()}`,
+      const response = await axios.get(
+        `https://ems-backend-mu.vercel.app/api/attendance/report?${query.toString()}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      if (responnse.data.success) {
-        if (skip == 0) {
-          setReport(responnse.data.groupData);
-        } else {
-          setReport((prevData) => ({
-            ...prevData,
-            ...responnse.data.groupData,
-          }));
-        }
+      if (response.data.success) {
+        setReport((prevData) => (skip === 0 ? response.data.groupData : { ...prevData, ...response.data.groupData }));
       }
-      setLoading(false);
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchReport();
   }, [skip, dateFilter]);
 
-  const handleLoadmore = () => {
+  const handleLoadMore = () => {
     setSkip((prevSkip) => prevSkip + limit);
   };
+
   return (
-    <div className="min-h-screen p-10 bg-white">
-      <h2 className="text-center text-2xl font-bold">Attendance Report</h2>
-      <div>
-        <h2 className="text-xl font-semibold">Filter by Date</h2>
-        <input type="date" className="border bg-gray-100" 
-        onChange={(e) => {
-          setDateFilter(e.target.value);
-          setSkip(0)
-        }}/>
-      </div>
-      {loading ? (
-        <div> Loading...</div>
-      ) : (
-        Object.entries(report).map(([date, record]) => (
-          <div className="mt-4 border-b" key={date}>
-            <h2 className="text-xl font-semibold">{date}</h2>
-            <table className="" border="1" cellPadding="10">
-              <thead>
-                <tr>
-                  <th>S No</th>
-                  <th>Employee ID</th>
-                  <th>Name</th>
-                  <th>Department</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {record.map((data, i) => (
-                  <tr key={data.employeeId}>
-                    <td>{i + 1}</td>
-                    <td>{data.employeeId}</td>
-                    <td>{data.employeeName}</td>
-                    <td>{data.departmentName}</td>
-                    <td>{data.status}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+    <div className="min-h-screen bg-gray-900 p-6 text-white">
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
+        <h2 className="text-center text-3xl font-semibold mb-6">Attendance Report</h2>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-gray-900 p-4 rounded-lg">
+          <div>
+            <h2 className="text-lg font-medium mb-2">Filter by Date</h2>
+            <input
+              type="date"
+              className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-white"
+              onChange={(e) => {
+                setDateFilter(e.target.value);
+                setSkip(0);
+              }}
+            />
           </div>
-        ))
-      )}
-      <button
-        className="px-4 py-2 border bg-gray-100 text-lg font-semibold"
-        onClick={handleLoadmore}
-      >
-        Load More
-      </button>
+        </div>
+        {loading ? (
+          <div className="text-center mt-6">Loading...</div>
+        ) : (
+          Object.entries(report).map(([date, record]) => (
+            <div className="mt-6 bg-gray-900 p-4 rounded-lg" key={date}>
+              <h2 className="text-xl font-semibold mb-3">{date}</h2>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse border border-gray-700">
+                  <thead className="bg-gray-800">
+                    <tr>
+                      <th className="p-2 border border-gray-600">S No</th>
+                      <th className="p-2 border border-gray-600">Employee ID</th>
+                      <th className="p-2 border border-gray-600">Name</th>
+                      <th className="p-2 border border-gray-600">Department</th>
+                      <th className="p-2 border border-gray-600">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {record.map((data, i) => (
+                      <tr key={data.employeeId} className="odd:bg-gray-700 even:bg-gray-700">
+                        <td className="p-2 border border-gray-600">{i + 1}</td>
+                        <td className="p-2 border border-gray-600">{data.employeeId}</td>
+                        <td className="p-2 border border-gray-600">{data.employeeName}</td>
+                        <td className="p-2 border border-gray-600">{data.departmentName}</td>
+                        <td className="p-2 border border-gray-600">{data.status}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))
+        )}
+        <div className="text-center mt-6">
+          <button
+            className="px-6 py-2 bg-teal-600 hover:bg-teal-700 transition duration-200 rounded-lg shadow-lg"
+            onClick={handleLoadMore}
+          >
+            Load More
+          </button>
+        </div>
+      </motion.div>
     </div>
   );
 };
