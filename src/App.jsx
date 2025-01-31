@@ -21,7 +21,7 @@ import Setting from "./components/EmployeeDashboard/Setting";
 import Table from "./components/leave/Table";
 import Detail from "./components/leave/Detail";
 import Attendance from "./components/attendance/Attendance.jsx";
-import AttendanceReport from "./components/attendance/AttendanceReport.jsx";
+import AttendanceReport from "./components/attendance/AttendanceReport";
 
 function App() {
   return (
