@@ -28,6 +28,7 @@ const Attendance = () => {
         const data = response.data.attendance.map((att) => ({
           employeeId: att.employeeId ? att.employeeId._id : "N/A",
           sno: sno++,
+          name: att.employeeName,
           department: att.employeeId && att.employeeId.department ? att.employeeId.department.dep_name : "Unknown",
           name: att.employeeId && att.employeeId.userId ? att.employeeId.userId.name : "Unknown",
           action: <AttendanceHelper status={att.status} employeeId={att.employeeId ? att.employeeId._id : "N/A"} statusChange={statusChange} />,
