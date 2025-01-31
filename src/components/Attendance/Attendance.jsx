@@ -25,10 +25,10 @@ const Attendance = () => {
 
       if (response.data.success) {
         let sno = 1;
-        const data = response.data.attendance.map((att, emp) => ({
+        const data = response.data.attendance.map((att) => ({
           employeeId: att.employeeId ? att.employeeId._id : "N/A",
           sno: sno++,
-          name: emp.userId.name,
+          name: att.userId.name,
           department: att.employeeId && att.employeeId.department ? att.employeeId.department.dep_name : "Unknown",
           name: att.employeeId && att.employeeId.userId ? att.employeeId.userId.name : "Unknown",
           action: <AttendanceHelper status={att.status} employeeId={att.employeeId ? att.employeeId._id : "N/A"} statusChange={statusChange} />,
