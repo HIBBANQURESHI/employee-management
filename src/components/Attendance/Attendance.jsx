@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { columns, AttendanceHelper } from "../../utils/AttendanceHelper";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { motion } from "framer-motion";
 
 const Attendance = () => {
   const [attendance, setAttendance] = useState([]);
@@ -12,37 +11,37 @@ const Attendance = () => {
 
   const statusChange = () => {
     fetchAttendance();
-  };
+  }
 
   const fetchAttendance = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("https://ems-backend-mu.vercel.app/api/attendance", {
+      const responnse = await axios.get("http://localhost:5000/api/attendance", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-
-      if (response.data.success) {
+      if (responnse.data.success) {
         let sno = 1;
-        const data = response.data.attendance.map((att) => ({
-          employeeId: att.employeeId ? att.employeeId._id : "N/A",
+        const data = await responnse.data.attendance.map((att) => ({
+          employeeId: att.employeeId.employeeId,
           sno: sno++,
-          department: att.employeeId?.department?.dep_name || "Unknown",
-          name: att.employeeId?.userId?.name || "Unknown",
-          action: <AttendanceHelper status={att.status} employeeId={att.employeeId ? att.employeeId._id : "N/A"} statusChange={statusChange} />,
+          department: att.employeeId.department.dep_name,
+          name: att.employeeId.userId.name,
+          action: <AttendanceHelper status={att.status} employeeId={att.employeeId.employeeId} statusChange={statusChange} />,
         }));
         setAttendance(data);
         setFilterAttendance(data);
       }
     } catch (error) {
-      console.error("Error in fetchAttendance:", error);
-      alert(error.response?.data?.message || "An error occurred while fetching attendance.");
+      console.log(error.message);
+      if (error.response && !error.response.data.success) {
+        alert(error.response.data.error);
+      }
     } finally {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchAttendance();
   }, []);
@@ -54,11 +53,9 @@ const Attendance = () => {
     setFilterAttendance(records);
   };
 
-
   if (!filteredAttendance) {
-    return <div className="text-white text-center text-lg">Loading ...</div>;
+    return <div>Loading ...</div>;
   }
-
   return (
     <div className="min-h-screen bg-gray-900 p-6 text-white">
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
