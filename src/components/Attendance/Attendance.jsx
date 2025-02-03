@@ -48,12 +48,11 @@ const Attendance = () => {
   }, []);
 
   const handleFilter = (e) => {
-    const searchValue = e.target.value.toLowerCase();
     const records = attendance.filter((emp) =>
-      emp.department && emp.department.toLowerCase().includes(searchValue)
-  );
+      emp.employeeId.toLowerCase().includes(e.target.value.toLowerCase())
+    );
     setFilterAttendance(records);
-};
+  };
 
 
   if (!filteredAttendance) {
