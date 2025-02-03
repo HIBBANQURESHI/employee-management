@@ -17,7 +17,7 @@ const List = () => {
           "https://ems-backend-mu.vercel.app/api/employee",
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`, 
             },
           }
         );
@@ -26,7 +26,7 @@ const List = () => {
           const data = await response.data.employees.map((emp) => ({
             _id: emp._id,
             sno: sno++,
-            dep_name: emp.department,
+            dep_name: emp.department.dep_name,
             name: emp.userId.name,
             dob: new Date(emp.dob).toLocaleDateString(),
             profileImage: (
