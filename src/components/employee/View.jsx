@@ -69,7 +69,7 @@ const View = () => {
 
                 <div className="flex space-x-3 mb-5 text-white">
                   <p className="text-lg font-bold">Department:</p>
-                  <p className="font-medium">{employee.department.dep_name}</p>
+                  <p className="font-medium">{employee.department}</p>
                 </div>
                 <div className="flex space-x-3 mb-5 text-white">
                   <p className="text-lg font-bold">Marital Status:</p>
