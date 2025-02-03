@@ -28,12 +28,8 @@ const Attendance = () => {
         const data = response.data.attendance.map((att) => ({
           employeeId: att.employeeId ? att.employeeId._id : "N/A",
           sno: sno++,
-          department: att.employeeId 
-          ? att.employee?.department?.dep_name 
-            ? att.employee.department.dep_name 
-            : att.employee?.dep?.dep_name || "Unknown"
-          : "Unknown",
-          name: att.employeeId && att.employeeId.userId ? att.employeeId.userId.name : "Unknown",
+          department: att.employeeId?.department?.dep_name || "Unknown",
+          name: att.employeeId?.userId?.name || "Unknown",
           action: <AttendanceHelper status={att.status} employeeId={att.employeeId ? att.employeeId._id : "N/A"} statusChange={statusChange} />,
         }));
         setAttendance(data);
@@ -52,11 +48,13 @@ const Attendance = () => {
   }, []);
 
   const handleFilter = (e) => {
+    const searchValue = e.target.value.toLowerCase();
     const records = attendance.filter((emp) =>
-      emp.department.toLowerCase().includes(e.target.value.toLowerCase())
-    );
+      emp.department && emp.department.toLowerCase().includes(searchValue)
+  );
     setFilterAttendance(records);
-  };
+};
+
 
   if (!filteredAttendance) {
     return <div className="text-white text-center text-lg">Loading ...</div>;
