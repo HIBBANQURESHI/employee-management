@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { columns, AttendanceHelper } from "../../utils/AttendanceHelper";
 import DataTable from "react-data-table-component";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const Attendance = () => {
   const [attendance, setAttendance] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filteredAttendance, setFilterAttendance] = useState(null);
 
-  const statusChange = () => {
+  const statusChange = () => { 
     fetchAttendance();
   }
 
