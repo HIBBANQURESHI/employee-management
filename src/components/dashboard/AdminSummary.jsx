@@ -16,7 +16,7 @@ const AdminSummary = () => {
           console.error("No token found in localStorage.");
           return;
         }
-
+  
         const [summaryResponse, attendanceResponse] = await Promise.all([
           axios.get("https://ems-backend-mu.vercel.app/api/dashboard/summary", {
             headers: { Authorization: `Bearer ${token}` },
@@ -25,12 +25,18 @@ const AdminSummary = () => {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
-
-        console.log("Summary Data:", summaryResponse.data); // ✅ Debugging
-        console.log("Attendance Data:", attendanceResponse.data); // ✅ Debugging
-
+  
+        console.log("Summary Data:", summaryResponse.data);
+        console.log("Attendance Data:", attendanceResponse.data);
+  
+        if (Array.isArray(attendanceResponse.data.attendance)) {
+          setAttendance(processAttendance(attendanceResponse.data.attendance)); // ✅ Process attendance
+        } else {
+          console.error("Unexpected attendance data format:", attendanceResponse.data);
+          setAttendance([]); // Prevent crash
+        }
+  
         setSummary(summaryResponse.data);
-        setAttendance(processAttendance(attendanceResponse.data.attendance || [])); // ✅ Process attendance
       } catch (error) {
         console.error("Error fetching data:", error);
         if (error.response) {
@@ -40,14 +46,22 @@ const AdminSummary = () => {
         setLoading(false);
       }
     };
-
+  
     fetchSummary();
   }, []);
+  
 
   // ✅ Function to process attendance
   const processAttendance = (records) => {
+    console.log("Processing attendance records:", records); // ✅ Debugging
+  
+    if (!Array.isArray(records)) {
+      console.error("Attendance records are not an array:", records);
+      return [];
+    }
+  
     const attendanceMap = {};
-
+  
     records.forEach(({ employeeId, employeeName, status }) => {
       if (!attendanceMap[employeeId]) {
         attendanceMap[employeeId] = {
@@ -57,16 +71,18 @@ const AdminSummary = () => {
           totalAbsent: 0,
         };
       }
-
+  
       if (status === "present") {
         attendanceMap[employeeId].totalPresent += 1;
       } else {
         attendanceMap[employeeId].totalAbsent += 1;
       }
     });
-
+  
+    console.log("Processed Attendance Data:", Object.values(attendanceMap)); // ✅ Debugging
     return Object.values(attendanceMap); // Convert object back to array
   };
+  
 
   if (loading) {
     return (
@@ -100,23 +116,27 @@ const AdminSummary = () => {
               </tr>
             </thead>
             <tbody>
-              {attendance.length > 0 ? (
-                attendance.map((record, index) => (
-                  <tr key={index} className="bg-gray-900">
-                    <td className="p-3 border border-gray-700">{record.employeeId}</td>
-                    <td className="p-3 border border-gray-700">{record.employeeName}</td>
-                    <td className="p-3 border border-gray-700 text-green-400">{record.totalPresent}</td>
-                    <td className="p-3 border border-gray-700 text-red-400">{record.totalAbsent}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="4" className="text-center p-3 border border-gray-700">
-                    No attendance records found
-                  </td>
-                </tr>
-              )}
-            </tbody>
+  {attendance.length > 0 ? (
+    attendance.map((record, index) => (
+      <tr key={index} className="bg-gray-900">
+        <td className="p-3 border border-gray-700">{record.employeeId}</td>
+        <td className="p-3 border border-gray-700">{record.employeeName}</td>
+        <td className="p-3 border border-gray-700 text-green-400">{record.totalPresent}</td>
+        <td className="p-3 border border-gray-700 text-red-400">{record.totalAbsent}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="4" className="text-center p-3 border border-gray-700 text-red-500">
+        No attendance records found
+        <pre className="text-xs text-gray-400">
+          {JSON.stringify(attendance, null, 2)}
+        </pre>
+      </td>
+    </tr>
+  )}
+</tbody>
+
           </table>
         </div>
       </div>
