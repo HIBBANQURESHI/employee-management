@@ -11,11 +11,14 @@ const AdminSummary = () => {
   useEffect(() => {
     const fetchSummary = async () => {
       try {
+        const currentMonth = new Date().getMonth() + 1;  // JavaScript months are 0-based
+        const currentYear = new Date().getFullYear();
+
         const [summaryResponse, attendanceResponse] = await Promise.all([
           axios.get("https://ems-backend-mu.vercel.app/api/dashboard/summary", {
             headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
           }),
-          axios.get("https://ems-backend-mu.vercel.app/api/attendance/report", {
+          axios.get(`https://ems-backend-mu.vercel.app/api/attendance/report?month=${currentMonth}&year=${currentYear}`, {
             headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
           })
         ]);
@@ -90,12 +93,12 @@ const AdminSummary = () => {
               <tr className="bg-gray-800">
                 <th className="p-3 border border-gray-700">Employee ID</th>
                 <th className="p-3 border border-gray-700">Employee Name</th>
-                <th className="p-3 border border-gray-700">Total Present</th>
-                <th className="p-3 border border-gray-700">Total Absent</th>
+                <th className="p-3 border border-gray-700">Days Present (This Month)</th>
+                <th className="p-3 border border-gray-700">Days Absent (This Month)</th>
               </tr>
             </thead>
             <tbody>
-              {attendance?.map((record, index) => (  // ✅ Prevent error if attendance is null
+              {attendance?.map((record, index) => (
                 <tr key={index} className="bg-gray-900">
                   <td className="p-3 border border-gray-700">{record.employeeId}</td>
                   <td className="p-3 border border-gray-700">{record.employeeName}</td>
