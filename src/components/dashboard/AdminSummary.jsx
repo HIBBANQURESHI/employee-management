@@ -5,7 +5,7 @@ import axios from "axios";
 
 const AdminSummary = () => {
   const [summary, setSummary] = useState(null);
-  const [attendance, setAttendance] = useState([]);
+  const [attendance, setAttendance] = useState([]); // ✅ Ensure array for attendance
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,37 +26,11 @@ const AdminSummary = () => {
           }),
         ]);
 
-        console.log("Summary Data:", summaryResponse.data);
-        console.log("Attendance Data:", attendanceResponse.data);
+        console.log("Summary Data:", summaryResponse.data); // ✅ Debugging
+        console.log("Attendance Data:", attendanceResponse.data); // ✅ Debugging
 
         setSummary(summaryResponse.data);
-
-        // Extract the latest date dynamically
-        const dateKeys = Object.keys(attendanceResponse.data);
-        if (dateKeys.length > 0) {
-          const latestDate = dateKeys[dateKeys.length - 1];
-          const rawAttendance = attendanceResponse.data[latestDate];
-
-          // Group data by employee ID and calculate attendance
-          const groupedAttendance = rawAttendance.reduce((acc, record) => {
-            if (!acc[record.employeeId]) {
-              acc[record.employeeId] = {
-                employeeId: record.employeeId,
-                employeeName: record.employeeName,
-                totalPresent: 0,
-                totalAbsent: 0,
-              };
-            }
-            if (record.status === "present") {
-              acc[record.employeeId].totalPresent += 1;
-            } else {
-              acc[record.employeeId].totalAbsent += 1;
-            }
-            return acc;
-          }, {});
-
-          setAttendance(Object.values(groupedAttendance)); // Convert object to array
-        }
+        setAttendance(processAttendance(attendanceResponse.data.attendance || [])); // ✅ Process attendance
       } catch (error) {
         console.error("Error fetching data:", error);
         if (error.response) {
@@ -69,6 +43,30 @@ const AdminSummary = () => {
 
     fetchSummary();
   }, []);
+
+  // ✅ Function to process attendance
+  const processAttendance = (records) => {
+    const attendanceMap = {};
+
+    records.forEach(({ employeeId, employeeName, status }) => {
+      if (!attendanceMap[employeeId]) {
+        attendanceMap[employeeId] = {
+          employeeId,
+          employeeName,
+          totalPresent: 0,
+          totalAbsent: 0,
+        };
+      }
+
+      if (status === "present") {
+        attendanceMap[employeeId].totalPresent += 1;
+      } else {
+        attendanceMap[employeeId].totalAbsent += 1;
+      }
+    });
+
+    return Object.values(attendanceMap); // Convert object back to array
+  };
 
   if (loading) {
     return (
