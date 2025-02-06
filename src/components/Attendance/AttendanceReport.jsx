@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const AttendanceReport = () => {
   const [report, setReport] = useState({});
-  const [attendanceCount, setAttendanceCount] = useState([]);
+  const [summary, setSummary] = useState([]);
   const [limit, setLimit] = useState(5);
   const [skip, setSkip] = useState(0);
   const [dateFilter, setDateFilter] = useState();
@@ -25,9 +25,10 @@ const AttendanceReport = () => {
           },
         }
       );
+
       if (response.data.success) {
         setReport((prevData) => (skip === 0 ? response.data.groupData : { ...prevData, ...response.data.groupData }));
-        setAttendanceCount(response.data.attendanceCount); // Store attendance count data
+        setSummary(response.data.attendanceCount); // Store the summary data
       }
     } catch (error) {
       alert(error.message);
@@ -64,66 +65,71 @@ const AttendanceReport = () => {
           </div>
         </div>
 
-        {/* Attendance Summary Section */}
-        <div className="mt-6 bg-gray-800 p-4 rounded-lg">
-          <h2 className="text-xl font-semibold mb-3">Monthly Attendance Summary</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse border border-gray-700">
-              <thead className="bg-gray-700">
-                <tr>
-                  <th className="p-2 border border-gray-600">Employee ID</th>
-                  <th className="p-2 border border-gray-600">Name</th>
-                  <th className="p-2 border border-gray-600">Total Present</th>
-                  <th className="p-2 border border-gray-600">Total Absent</th>
-                </tr>
-              </thead>
-              <tbody>
-                {attendanceCount.map((employee) => (
-                  <tr key={employee.employeeId} className="odd:bg-gray-700 even:bg-gray-600">
-                    <td className="p-2 border border-gray-600">{employee.employeeId}</td>
-                    <td className="p-2 border border-gray-600">{employee.employeeName}</td>
-                    <td className="p-2 border border-gray-600">{employee.totalPresent}</td>
-                    <td className="p-2 border border-gray-600">{employee.totalAbsent}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Attendance Report Table */}
+        {/* Loading State */}
         {loading ? (
           <div className="text-center mt-6">Loading...</div>
         ) : (
-          Object.entries(report).map(([date, record]) => (
-            <div className="mt-6 bg-gray-900 p-4 rounded-lg" key={date}>
-              <h2 className="text-xl font-semibold mb-3">{date}</h2>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse border border-gray-700">
-                  <thead className="bg-gray-800">
-                    <tr>
-                      <th className="p-2 border border-gray-600">S No</th>
-                      <th className="p-2 border border-gray-600">Employee ID</th>
-                      <th className="p-2 border border-gray-600">Name</th>
-                      <th className="p-2 border border-gray-600">Department</th>
-                      <th className="p-2 border border-gray-600">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {record.map((data, i) => (
-                      <tr key={data.employeeId} className="odd:bg-gray-700 even:bg-gray-600">
-                        <td className="p-2 border border-gray-600">{i + 1}</td>
-                        <td className="p-2 border border-gray-600">{data.employeeId}</td>
-                        <td className="p-2 border border-gray-600">{data.employeeName}</td>
-                        <td className="p-2 border border-gray-600">{data.departmentName}</td>
-                        <td className="p-2 border border-gray-600">{data.status}</td>
+          <>
+            {/* Attendance Records */}
+            {Object.entries(report).map(([date, record]) => (
+              <div className="mt-6 bg-gray-900 p-4 rounded-lg" key={date}>
+                <h2 className="text-xl font-semibold mb-3">{date}</h2>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse border border-gray-700">
+                    <thead className="bg-gray-800">
+                      <tr>
+                        <th className="p-2 border border-gray-600">S No</th>
+                        <th className="p-2 border border-gray-600">Employee ID</th>
+                        <th className="p-2 border border-gray-600">Name</th>
+                        <th className="p-2 border border-gray-600">Department</th>
+                        <th className="p-2 border border-gray-600">Status</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {record.map((data, i) => (
+                        <tr key={data.employeeId} className="odd:bg-gray-700 even:bg-gray-700">
+                          <td className="p-2 border border-gray-600">{i + 1}</td>
+                          <td className="p-2 border border-gray-600">{data.employeeId}</td>
+                          <td className="p-2 border border-gray-600">{data.employeeName}</td>
+                          <td className="p-2 border border-gray-600">{data.departmentName}</td>
+                          <td className="p-2 border border-gray-600">{data.status}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          ))
+            ))}
+
+            {/* Monthly Attendance Summary Table */}
+            {summary.length > 0 && (
+              <div className="mt-10 bg-gray-900 p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">Monthly Attendance Summary</h2>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse border border-gray-700">
+                    <thead className="bg-gray-800">
+                      <tr>
+                        <th className="p-2 border border-gray-600">Employee ID</th>
+                        <th className="p-2 border border-gray-600">Name</th>
+                        <th className="p-2 border border-gray-600">Total Present</th>
+                        <th className="p-2 border border-gray-600">Total Absent</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {summary.map((data) => (
+                        <tr key={data.employeeId} className="odd:bg-gray-700 even:bg-gray-700">
+                          <td className="p-2 border border-gray-600">{data.employeeId}</td>
+                          <td className="p-2 border border-gray-600">{data.employeeName}</td>
+                          <td className="p-2 border border-gray-600">{data.totalPresent}</td>
+                          <td className="p-2 border border-gray-600">{data.totalAbsent}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </>
         )}
 
         {/* Load More Button */}
