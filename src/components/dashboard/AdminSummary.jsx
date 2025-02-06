@@ -50,6 +50,37 @@ const AdminSummary = () => {
         <SummaryCard icon={<DollarSign size={24} />} text="Monthly Salary" number={`$${summary.totalSalary}`} color="bg-orange-600" />
       </div>
 
+      {/* Leave Details Section */}
+      <div className="mt-12">
+        <h4 className="text-center text-2xl font-bold">Leave Details</h4>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mt-6 text-black">
+          <SummaryCard
+            icon={<FileText size={24} />}
+            text="Leave Applied"
+            number={summary.leaveSummary?.appliedFor || 0}
+            color="bg-teal-600"
+          />
+          <SummaryCard
+            icon={<CheckCircle size={24} />}
+            text="Leave Approved"
+            number={summary.leaveSummary?.approved || 0}
+            color="bg-green-600"
+          />
+          <SummaryCard
+            icon={<Hourglass size={24} />}
+            text="Leave Pending"
+            number={summary.leaveSummary?.pending || 0}
+            color="bg-yellow-600"
+          />
+          <SummaryCard
+            icon={<XCircle size={24} />}
+            text="Leave Rejected"
+            number={summary.leaveSummary?.rejected || 0}
+            color="bg-red-600"
+          />
+        </div>
+      </div>
+
       {/* Attendance Summary Section */}
       <div className="mt-12">
         <h4 className="text-center text-2xl font-bold">Employee Attendance</h4>
