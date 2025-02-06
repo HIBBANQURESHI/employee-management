@@ -26,14 +26,25 @@ const AdminSummary = () => {
           }),
         ]);
   
-        console.log("Summary Data:", summaryResponse.data);
-        console.log("Attendance Data:", attendanceResponse.data);
+        console.log("✅ Summary Data:", summaryResponse.data);
+        console.log("⚠️ Attendance Raw Response:", attendanceResponse.data);
   
+        // Checking the structure of attendanceResponse.data
+        if (!attendanceResponse.data || typeof attendanceResponse.data !== "object") {
+          console.error("🚨 Unexpected attendance data format (not an object):", attendanceResponse.data);
+          return;
+        }
+  
+        // Checking if the response has an "attendance" array or another structure
         if (Array.isArray(attendanceResponse.data.attendance)) {
-          setAttendance(processAttendance(attendanceResponse.data.attendance)); // ✅ Process attendance
+          console.log("✅ Attendance Data Found:", attendanceResponse.data.attendance);
+          setAttendance(processAttendance(attendanceResponse.data.attendance));
+        } else if (Array.isArray(attendanceResponse.data)) {
+          console.log("✅ Attendance Data Found (without 'attendance' key):", attendanceResponse.data);
+          setAttendance(processAttendance(attendanceResponse.data));
         } else {
-          console.error("Unexpected attendance data format:", attendanceResponse.data);
-          setAttendance([]); // Prevent crash
+          console.error("🚨 Unexpected attendance structure:", attendanceResponse.data);
+          setAttendance([]); // Prevents crashes
         }
   
         setSummary(summaryResponse.data);
@@ -49,6 +60,7 @@ const AdminSummary = () => {
   
     fetchSummary();
   }, []);
+  
   
 
   // ✅ Function to process attendance
