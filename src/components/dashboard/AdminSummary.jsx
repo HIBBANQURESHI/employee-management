@@ -84,7 +84,7 @@ const AdminSummary = () => {
         </div>
       </div>
 
-      {/* Attendance Summary Section */}
+      {/*  Attendance Summary Section 
       <div className="mt-12">
         <h4 className="text-center text-2xl font-bold">Employee Attendance</h4>
         <div className="overflow-x-auto mt-6">
@@ -109,7 +109,7 @@ const AdminSummary = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div>*/}
     </div>
   );
 };
