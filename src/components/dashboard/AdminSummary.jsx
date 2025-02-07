@@ -24,7 +24,7 @@ const AdminSummary = () => {
         ]);
 
         setSummary(summaryResponse.data);
-        setAttendance(attendanceResponse.data.attendanceSummary || []);  // ✅ Ensure it's always an array
+        setAttendance(attendanceResponse.data.attendanceCount || []);  // ✅ Ensure it's always an array
       } catch (error) {
         if (error.response) alert(error.response.data.error);
         console.log(error.message);
@@ -102,8 +102,8 @@ const AdminSummary = () => {
                 <tr key={index} className="bg-gray-900">
                   <td className="p-3 border border-gray-700">{record.employeeId}</td>
                   <td className="p-3 border border-gray-700">{record.employeeName}</td>
-                  <td className="p-3 border border-gray-700 text-green-400">{record.present}</td>
-                  <td className="p-3 border border-gray-700 text-red-400">{record.absent}</td>
+                  <td className="p-3 border border-gray-700 text-green-400">{record.totalPresent}</td>
+                  <td className="p-3 border border-gray-700 text-red-400">{record.totalAbsent}</td>
                 </tr>
               ))}
             </tbody>
