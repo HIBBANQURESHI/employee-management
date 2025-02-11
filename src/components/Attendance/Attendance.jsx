@@ -12,12 +12,11 @@ const Attendance = () => {
 
   const statusChange = () => { 
     fetchAttendance();
-  }
+  };
 
   const fetchAttendance = async () => {
     setLoading(true);
     try {
-      // Fixed typo in variable name from 'responnse' to 'response'
       const response = await axios.get("https://ems-backend-mu.vercel.app/api/attendance", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -26,16 +25,16 @@ const Attendance = () => {
       
       if (response.data.success) {
         let sno = 1;
-        // Added null checks using optional chaining and removed unnecessary await
         const data = response.data.attendance.map((att) => ({
-          employeeId: att.employeeId?.employeeId || 'N/A', // Handle null employeeId
+          employeeId: att.employeeId?.employeeId || 'N/A',
           sno: sno++,
-          department: att.employeeId?.department?.dep_name || 'N/A', // Handle nested nulls
-          name: att.employeeId?.userId?.name || 'N/A', // Handle nested nulls
+          department: att.employeeId?.department?.dep_name || 'N/A',
+          name: att.employeeId?.userId?.name || 'N/A',
           action: <AttendanceHelper 
                     status={att.status} 
-                    employeeId={att.employeeId?.employeeId} // Handle null case
+                    employeeId={att.employeeId?.employeeId} 
                     statusChange={statusChange} 
+                    allowChange={true} // Added prop to allow changing attendance
                   />,
         }));
         setAttendance(data);
