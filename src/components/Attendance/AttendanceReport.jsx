@@ -7,25 +7,47 @@ const EmployeeTotalAttendance = ({ employeeId }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const controller = new AbortController();
+    
     const fetchEmployeeTotal = async () => {
       try {
+        if (!employeeId) {
+          setLoading(false);
+          return;
+        }
+
         const response = await axios.get(
           `https://ems-backend-mu.vercel.app/api/attendance/employee-total/${employeeId}`,
           {
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            headers: { 
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json"
+            },
+            signal: controller.signal,
+            timeout: 10000
           }
         );
-        if (response.data.success) {
-          setTotal(response.data.totals);
+
+        if (response.data?.success) {
+          setTotal({
+            present: response.data.totals?.present || 0,
+            absent: response.data.totals?.absent || 0,
+            sick: response.data.totals?.sick || 0,
+            leave: response.data.totals?.leave || 0
+          });
         }
       } catch (error) {
-        console.error("Error fetching employee totals:", error);
+        if (!axios.isCancel(error)) {
+          console.error("Employee totals error:", error);
+          alert(error.response?.data?.error || "Failed to load attendance totals");
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchEmployeeTotal();
+    return () => controller.abort();
   }, [employeeId]);
 
   return (
@@ -33,20 +55,18 @@ const EmployeeTotalAttendance = ({ employeeId }) => {
       {loading ? (
         <div className="col-span-4 text-center text-gray-400">Loading...</div>
       ) : (
-        <>
-          {["present", "absent", "sick", "leave"].map((key, index) => (
-            <div
-              key={index}
-              className={`p-2 rounded text-center ${
-                key === "present" ? "bg-teal-700" :
-                key === "absent" ? "bg-red-700" :
-                key === "sick" ? "bg-yellow-700" : "bg-blue-700"
-              }`}
-            >
-              {key.charAt(0).toUpperCase()}: {total[key]}
-            </div>
-          ))}
-        </>
+        ["present", "absent", "sick", "leave"].map((key) => (
+          <div
+            key={key}
+            className={`p-2 rounded text-center ${
+              key === "present" ? "bg-teal-700" :
+              key === "absent" ? "bg-red-700" :
+              key === "sick" ? "bg-yellow-700" : "bg-blue-700"
+            }`}
+          >
+            {key.charAt(0).toUpperCase()}: {total[key]}
+          </div>
+        ))
       )}
     </div>
   );
@@ -68,42 +88,88 @@ const AttendanceReport = () => {
     notMarked: 0
   });
 
-  useEffect(() => { fetchReport(); }, [skip, dateFilter]);
-  useEffect(() => { fetchMonthlySummary(); }, [monthFilter, yearFilter]);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchReport(controller);
+    return () => controller.abort();
+  }, [skip, dateFilter, limit]);
 
-  const fetchReport = async () => {
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchMonthlySummary(controller);
+    return () => controller.abort();
+  }, [monthFilter, yearFilter]);
+
+  const fetchReport = async (controller) => {
     try {
       setLoading(true);
-      const query = new URLSearchParams({ limit, skip });
+      const query = new URLSearchParams({
+        limit: limit.toString(),
+        skip: skip.toString()
+      });
+      
       if (dateFilter) query.append("date", dateFilter);
 
       const response = await axios.get(
         `https://ems-backend-mu.vercel.app/api/attendance/report?${query.toString()}`,
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        { 
+          headers: { 
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json"
+          },
+          signal: controller.signal,
+          timeout: 10000
+        }
       );
 
-      if (response.data.success) {
-        setReport((prev) => ({ ...prev, ...response.data.groupData }));
+      if (response.data?.success) {
+        setReport(response.data.groupData || {});
       }
     } catch (error) {
-      alert(error.message);
+      if (!axios.isCancel(error)) {
+        console.error("Report fetch error:", error);
+        alert(
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          "Failed to load attendance report"
+        );
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchMonthlySummary = async () => {
+  const fetchMonthlySummary = async (controller) => {
     try {
       const response = await axios.get(
         `https://ems-backend-mu.vercel.app/api/attendance/monthly-summary?month=${monthFilter}&year=${yearFilter}`,
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        { 
+          headers: { 
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json"
+          },
+          signal: controller.signal,
+          timeout: 10000
+        }
       );
 
-      if (response.data.success) {
-        setSummary(response.data.summary);
+      if (response.data?.success) {
+        setSummary({
+          present: response.data.summary?.present || 0,
+          absent: response.data.summary?.absent || 0,
+          sick: response.data.summary?.sick || 0,
+          leave: response.data.summary?.leave || 0,
+          notMarked: response.data.summary?.notMarked || response.data.summary?.not_marked || 0
+        });
       }
     } catch (error) {
-      alert(error.message);
+      if (!axios.isCancel(error)) {
+        alert(
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          "Failed to load monthly summary"
+        );
+      }
     }
   };
 
@@ -151,7 +217,9 @@ const AttendanceReport = () => {
                   status === 'leave' ? 'bg-blue-800' : 'bg-gray-800'
                 }`}
               >
-                <h3 className="text-sm font-medium capitalize mb-2">{status}</h3>
+                <h3 className="text-sm font-medium capitalize mb-2">
+                  {status === 'notMarked' ? 'Not Marked' : status}
+                </h3>
                 <p className="text-2xl font-bold">{count}</p>
               </div>
             ))}
@@ -165,14 +233,20 @@ const AttendanceReport = () => {
             <input
               type="date"
               className="px-4 py-2 bg-gray-700 border rounded-lg"
-              onChange={(e) => { setDateFilter(e.target.value); setSkip(0); setReport({}); }}
+              onChange={(e) => {
+                setDateFilter(e.target.value);
+                setSkip(0);
+                setReport({});
+              }}
             />
           </div>
 
           {loading ? (
-            <div className="text-center py-8">Loading...</div>
+            <div className="text-center py-8">Loading attendance data...</div>
           ) : Object.keys(report).length === 0 ? (
-            <div className="text-center py-8 text-gray-400">No records found</div>
+            <div className="text-center py-8 text-gray-400">
+              {dateFilter ? `No records found for ${dateFilter}` : "No records found"}
+            </div>
           ) : (
             Object.entries(report).map(([date, record]) => (
               <div key={date} className="mb-8">
@@ -190,12 +264,18 @@ const AttendanceReport = () => {
                     </thead>
                     <tbody>
                       {record.map((data, i) => (
-                        <tr key={data.employeeId} className="border-b border-gray-700 hover:bg-gray-750">
-                          <td className="p-3">{i + 1}</td>
-                          <td className="p-3">{data.employeeId}</td>
-                          <td className="p-3">{data.employeeName}</td>
-                          <td className="p-3">{data.status}</td>
-                          <td className="p-3"><EmployeeTotalAttendance employeeId={data.employeeId} /></td>
+                        <tr key={`${date}-${data.employeeId}`} className="border-b border-gray-700 hover:bg-gray-750">
+                          <td className="p-3">{i + 1 + skip}</td>
+                          <td className="p-3">{data.employeeId || 'N/A'}</td>
+                          <td className="p-3">{data.employeeName || 'Unknown'}</td>
+                          <td className="p-3 capitalize">{data.status || 'Not Marked'}</td>
+                          <td className="p-3">
+                            {data.employeeId ? (
+                              <EmployeeTotalAttendance employeeId={data.employeeId} />
+                            ) : (
+                              <span className="text-gray-400">N/A</span>
+                            )}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
