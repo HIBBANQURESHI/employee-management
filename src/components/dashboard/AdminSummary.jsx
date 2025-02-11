@@ -48,7 +48,7 @@ const AdminSummary = () => {
       <h3 className="text-3xl font-bold text-center md:text-left">Dashboard Overview</h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8 text-black">
-        <SummaryCard icon={<Users size={24} />} text="Total Employees" number={summary.totalEmployees} color="bg-teal-600" />
+        <SummaryCard icon={<Users size={24} />} text="Total Employees" number={summary?.totalEmployees || 0} color="bg-teal-600" />
         <SummaryCard icon={<Building2 size={24} />} text="Total Departments" number={summary.totalDepartments} color="bg-yellow-600" />
         <SummaryCard icon={<DollarSign size={24} />} text="Monthly Salary" number={`$${summary.totalSalary}`} color="bg-orange-600" />
       </div>
