@@ -17,25 +17,32 @@ const Attendance = () => {
   const fetchAttendance = async () => {
     setLoading(true);
     try {
-      const responnse = await axios.get("https://ems-backend-mu.vercel.app/api/attendance", {
+      // Fixed typo in variable name from 'responnse' to 'response'
+      const response = await axios.get("https://ems-backend-mu.vercel.app/api/attendance", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      if (responnse.data.success) {
+      
+      if (response.data.success) {
         let sno = 1;
-        const data = await responnse.data.attendance.map((att) => ({
-          employeeId: att.employeeId.employeeId,
+        // Added null checks using optional chaining and removed unnecessary await
+        const data = response.data.attendance.map((att) => ({
+          employeeId: att.employeeId?.employeeId || 'N/A', // Handle null employeeId
           sno: sno++,
-          department: att.employeeId.department.dep_name,
-          name: att.employeeId.userId.name,
-          action: <AttendanceHelper status={att.status} employeeId={att.employeeId.employeeId} statusChange={statusChange} />,
+          department: att.employeeId?.department?.dep_name || 'N/A', // Handle nested nulls
+          name: att.employeeId?.userId?.name || 'N/A', // Handle nested nulls
+          action: <AttendanceHelper 
+                    status={att.status} 
+                    employeeId={att.employeeId?.employeeId} // Handle null case
+                    statusChange={statusChange} 
+                  />,
         }));
         setAttendance(data);
         setFilterAttendance(data);
       }
     } catch (error) {
-      console.log(error.message);
+      console.error("Fetch error:", error.message);
       if (error.response && !error.response.data.success) {
         alert(error.response.data.error);
       }
@@ -43,20 +50,24 @@ const Attendance = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchAttendance();
   }, []);
 
   const handleFilter = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
     const records = attendance.filter((emp) =>
-      emp.employeeId.toLowerCase().includes(e.target.value.toLowerCase())
+      emp.employeeId.toLowerCase().includes(searchTerm) ||
+      emp.name.toLowerCase().includes(searchTerm)
     );
     setFilterAttendance(records);
   };
 
-  if (!filteredAttendance) {
-    return <div>Loading ...</div>;
+  if (loading || !filteredAttendance) {
+    return <div className="min-h-screen bg-gray-900 p-6 text-white">Loading...</div>;
   }
+
   return (
     <div className="min-h-screen bg-gray-900 p-6 text-white">
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
@@ -66,7 +77,7 @@ const Attendance = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-gray-900 p-4 rounded-lg">
           <input
             type="text"
-            placeholder="Search by Department Name"
+            placeholder="Search by Employee ID or Name"
             className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-white"
             onChange={handleFilter}
           />
@@ -81,7 +92,14 @@ const Attendance = () => {
           </Link>
         </div>
         <div className="mt-6 bg-gray-900 p-4 rounded-lg shadow-lg">
-          <DataTable columns={columns} data={filteredAttendance} pagination className="text-white" />
+          <DataTable 
+            columns={columns} 
+            data={filteredAttendance} 
+            pagination 
+            className="text-white"
+            progressPending={loading}
+            progressComponent={<div className="text-white">Loading...</div>}
+          />
         </div>
       </motion.div>
     </div>
