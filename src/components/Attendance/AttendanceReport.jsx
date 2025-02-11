@@ -192,10 +192,10 @@ const AttendanceReport = () => {
                       {record.map((data, i) => (
                         <tr key={data.employeeId} className="border-b border-gray-700 hover:bg-gray-750">
                           <td className="p-3">{i + 1}</td>
-                          <td className="p-3">{data.employeeId}</td>
+                          <td className="p-3">{data.employeeId?.employeeId || 'N/A'}</td>
                           <td className="p-3">{data.employeeName}</td>
                           <td className="p-3">{data.status}</td>
-                          <td className="p-3"><EmployeeTotalAttendance employeeId={data.employeeId} /></td>
+                          <td className="p-3"><EmployeeTotalAttendance employeeId={data.employeeId?.employeeId || 'N/A'} /></td>
                         </tr>
                       ))}
                     </tbody>
