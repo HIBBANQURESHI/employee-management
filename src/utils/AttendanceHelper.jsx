@@ -27,7 +27,7 @@ export const columns = [
   {
     name: "Action",
     selector: (row) => row.action,
-    center: "true",
+    center: true,
   },
 ];
 
@@ -77,9 +77,17 @@ export const AttendanceHelper = ({ status, employeeId, statusChange }) => {
           </button>
         </div>
       ) : (
-        <p className="bg-gray-200 text-center py-2 px-4 rounded-lg text-sm font-medium text-gray-700">
-          {status.charAt(0).toUpperCase() + status.slice(1)}
-        </p>
+        <div className="flex items-center space-x-2">
+          <p className="bg-gray-200 text-center py-2 px-4 rounded-lg text-sm font-medium text-gray-700">
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </p>
+          <button
+            className="px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors duration-300"
+            onClick={() => markEmployee(null, employeeId)}
+          >
+            Change
+          </button>
+        </div>
       )}
     </div>
   );

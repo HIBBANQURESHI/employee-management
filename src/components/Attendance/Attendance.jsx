@@ -12,7 +12,7 @@ const Attendance = () => {
 
   const statusChange = () => { 
     fetchAttendance();
-  };
+  }
 
   const fetchAttendance = async () => {
     setLoading(true);
@@ -34,7 +34,7 @@ const Attendance = () => {
                     status={att.status} 
                     employeeId={att.employeeId?.employeeId} 
                     statusChange={statusChange} 
-                    allowChange={true} // Added prop to allow changing attendance
+                    allowChange={true} // Enables the change button
                   />,
         }));
         setAttendance(data);
