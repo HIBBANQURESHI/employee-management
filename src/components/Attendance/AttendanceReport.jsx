@@ -1,56 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-
-const EmployeeTotalAttendance = ({ employeeId }) => {
-  const [total, setTotal] = useState({ present: 0, absent: 0, sick: 0, leave: 0 });
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchEmployeeTotal = async () => {
-      try {
-        const response = await axios.get(
-          `https://ems-backend-mu.vercel.app/api/attendance/employee-total/${employeeId}`,
-          {
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-          }
-        );
-        if (response.data.success) {
-          setTotal(response.data.totals);
-        }
-      } catch (error) {
-        console.error("Error fetching employee totals:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEmployeeTotal();
-  }, [employeeId]);
-
-  return (
-    <div className="grid grid-cols-4 gap-2 text-sm">
-      {loading ? (
-        <div className="col-span-4 text-center text-gray-400">Loading...</div>
-      ) : (
-        <>
-          {["present", "absent", "sick", "leave"].map((key, index) => (
-            <div
-              key={index}
-              className={`p-2 rounded text-center ${
-                key === "present" ? "bg-teal-700" :
-                key === "absent" ? "bg-red-700" :
-                key === "sick" ? "bg-yellow-700" : "bg-blue-700"
-              }`}
-            >
-              {key.charAt(0).toUpperCase()}: {total[key]}
-            </div>
-          ))}
-        </>
-      )}
-    </div>
-  );
-};
+import EmployeeTotalAttendance from "./EmployeeTotalAttendance";
 
 const AttendanceReport = () => {
   const [report, setReport] = useState({});
@@ -65,11 +16,16 @@ const AttendanceReport = () => {
     absent: 0,
     sick: 0,
     leave: 0,
-    notMarked: 0
+    notMarked: 0,
   });
 
-  useEffect(() => { fetchReport(); }, [skip, dateFilter]);
-  useEffect(() => { fetchMonthlySummary(); }, [monthFilter, yearFilter]);
+  useEffect(() => {
+    fetchReport();
+  }, [skip, dateFilter]);
+
+  useEffect(() => {
+    fetchMonthlySummary();
+  }, [monthFilter, yearFilter]);
 
   const fetchReport = async () => {
     try {
@@ -124,7 +80,7 @@ const AttendanceReport = () => {
               >
                 {Array.from({ length: 12 }, (_, i) => (
                   <option key={i + 1} value={i + 1}>
-                    {new Date(0, i).toLocaleString('default', { month: 'long' })}
+                    {new Date(0, i).toLocaleString("default", { month: "long" })}
                   </option>
                 ))}
               </select>
@@ -145,10 +101,10 @@ const AttendanceReport = () => {
               <div
                 key={status}
                 className={`p-4 rounded-lg transition-all duration-300 hover:scale-105 ${
-                  status === 'present' ? 'bg-teal-800' :
-                  status === 'absent' ? 'bg-red-800' :
-                  status === 'sick' ? 'bg-yellow-800' :
-                  status === 'leave' ? 'bg-blue-800' : 'bg-gray-800'
+                  status === "present" ? "bg-teal-800" :
+                  status === "absent" ? "bg-red-800" :
+                  status === "sick" ? "bg-yellow-800" :
+                  status === "leave" ? "bg-blue-800" : "bg-gray-800"
                 }`}
               >
                 <h3 className="text-sm font-medium capitalize mb-2">{status}</h3>
@@ -165,7 +121,11 @@ const AttendanceReport = () => {
             <input
               type="date"
               className="px-4 py-2 bg-gray-700 border rounded-lg"
-              onChange={(e) => { setDateFilter(e.target.value); setSkip(0); setReport({}); }}
+              onChange={(e) => {
+                setDateFilter(e.target.value);
+                setSkip(0);
+                setReport({});
+              }}
             />
           </div>
 
