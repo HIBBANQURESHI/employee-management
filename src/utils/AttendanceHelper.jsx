@@ -1,91 +1,79 @@
 import axios from "axios";
 import React from "react";
 
-export const columns = [
-  {
-    name: "S No",
-    selector: (row) => row.sno,
-    width: "70px",
-  },
-  {
-    name: "Name",
-    selector: (row) => row.name,
-    sortable: true,
-    width: "100px",
-  },
-  {
-    name: "Emp ID",
-    selector: (row) => row.employeeId,
-    sortable: true,
-    width: "100px",
-  },
-  {
-    name: "Department",
-    selector: (row) => row.department,
-    width: "120px",
-  },
-  {
-    name: "Action",
-    selector: (row) => row.action,
-    center: true,
-  },
-];
+export const AttendanceHelper = ({ status, employeeId, statusChange, date }) => {
+  const markEmployee = async (newStatus) => {
+    try {
+      const response = await axios.put(
+        `https://ems-backend-mu.vercel.app/api/attendance/update/${employeeId}`,
+        { status: newStatus, date }, // Include the date in the request
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-export const AttendanceHelper = ({ status, employeeId, statusChange }) => {
-  const markEmployee = async (status, employeeId) => {
-    const response = await axios.put(
-      `https://ems-backend-mu.vercel.app/api/attendance/update/${employeeId}`,
-      { status },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+      if (response.data.success) {
+        statusChange(); // Refresh the attendance data
       }
-    );
-    if (response.data.success) {
-      statusChange();
+    } catch (error) {
+      console.error("Error updating attendance:", error.message);
+      alert("Failed to update attendance. Please try again.");
     }
   };
 
   return (
     <div className="flex items-center justify-center space-x-4">
       {status == null ? (
-        <div className="flex space-x-4">
+        <div className="flex space-x-2">
           <button
             className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors duration-300"
-            onClick={() => markEmployee("present", employeeId)}
+            onClick={() => markEmployee("Present")}
           >
             Present
           </button>
           <button
             className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-300"
-            onClick={() => markEmployee("absent", employeeId)}
+            onClick={() => markEmployee("Absent")}
           >
             Absent
           </button>
           <button
             className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-lg transition-colors duration-300"
-            onClick={() => markEmployee("sick", employeeId)}
+            onClick={() => markEmployee("Sick")}
           >
             Sick
           </button>
           <button
             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-300"
-            onClick={() => markEmployee("leave", employeeId)}
+            onClick={() => markEmployee("Leave")}
           >
             Leave
           </button>
         </div>
       ) : (
         <div className="flex items-center space-x-2">
-          <p className="bg-gray-200 text-center py-2 px-4 rounded-lg text-sm font-medium text-gray-700">
-            {status.charAt(0).toUpperCase() + status.slice(1)}
-          </p>
-          <button
-            className="px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors duration-300"
-            onClick={() => markEmployee(null, employeeId)}
+          <span
+            className={`px-4 py-2 rounded-lg text-sm font-semibold ${
+              status === "Present"
+                ? "bg-green-100 text-green-800"
+                : status === "Absent"
+                ? "bg-red-100 text-red-800"
+                : status === "Sick"
+                ? "bg-yellow-100 text-yellow-800"
+                : status === "Leave"
+                ? "bg-blue-100 text-blue-800"
+                : "bg-gray-100 text-gray-800"
+            }`}
           >
-            Change
+            {status}
+          </span>
+          <button
+            className="px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors duration-300"
+            onClick={() => markEmployee(null)}
+          >
+            Reset
           </button>
         </div>
       )}
