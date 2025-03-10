@@ -8,8 +8,8 @@ import AdminSummary from "./components/dashboard/AdminSummary";
 import DepartmentList from "./components/department/DepartmentList";
 import AddDepartment from "./components/department/AddDepartment";
 import EditDepartment from "./components/department/EditDepartment";
-import List from "./components/employee/List";
-import Add from "./components/employee/Add";
+import List from "./components/employee/List"; 
+import Add from "./components/employee/Add"; 
 import View from "./components/employee/View";
 import Edit from "./components/employee/Edit";
 import AddSalary from "./components/salary/Add";
@@ -104,5 +104,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;
+  
