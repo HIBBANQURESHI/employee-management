@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { columns, AttendanceHelper } from "../../utils/AttendanceHelper";
+import { columns } from "../../utils/columns"; // Adjust the path as needed
+import { AttendanceHelper } from "../../utils/AttendanceHelper";
 import DataTable from "react-data-table-component";
 import axios from "axios";
 import { motion } from "framer-motion";
