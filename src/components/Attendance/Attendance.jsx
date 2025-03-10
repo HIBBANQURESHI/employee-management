@@ -63,13 +63,17 @@ const Attendance = () => {
                 />
               ),
             }));
-            setAttendance(data);
-            setFilterAttendance(data);
+      
+            // If no records exist, create an empty array
+            setAttendance(data.length > 0 ? data : []);
+            setFilterAttendance(data.length > 0 ? data : []);
           }
         } catch (error) {
           console.error("Fetch error:", error.message);
           if (error.response && error.response.status === 404) {
-            alert("No attendance records found for the selected date.");
+            // If no records exist, allow marking attendance for the new date
+            setAttendance([]);
+            setFilterAttendance([]);
           } else {
             alert("An error occurred while fetching attendance data.");
           }
