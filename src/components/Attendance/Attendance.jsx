@@ -36,45 +36,47 @@ const Attendance = () => {
     };
 
     const fetchAttendance = async (date = new Date().toISOString().split("T")[0]) => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          `https://ems-backend-mu.vercel.app/api/attendance?date=${date}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+        setLoading(true);
+        try {
+          const response = await axios.get(
+            `https://ems-backend-mu.vercel.app/api/attendance?date=${date}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+      
+          if (response.data.success) {
+            let sno = 1;
+            const data = response.data.attendance.map((att) => ({
+              employeeId: att.employeeId?.employeeId || "N/A",
+              sno: sno++,
+              department: att.employeeId?.department?.dep_name || "N/A",
+              name: att.employeeId?.userId?.name || "N/A",
+              action: (
+                <AttendanceHelper
+                  status={att.status}
+                  employeeId={att.employeeId?.employeeId}
+                  statusChange={() => fetchAttendance(date)} // Refresh data after update
+                  date={date} // Pass the selected date
+                />
+              ),
+            }));
+            setAttendance(data);
+            setFilterAttendance(data);
           }
-        );
-    
-        if (response.data.success) {
-          let sno = 1;
-          const data = response.data.attendance.map((att) => ({
-            employeeId: att.employeeId?.employeeId || "N/A",
-            sno: sno++,
-            department: att.employeeId?.department?.dep_name || "N/A",
-            name: att.employeeId?.userId?.name || "N/A",
-            action: (
-              <AttendanceHelper
-                status={att.status}
-                employeeId={att.employeeId?.employeeId}
-                statusChange={() => fetchAttendance(date)} // Refresh data after update
-                date={date} // Pass the selected date
-              />
-            ),
-          }));
-          setAttendance(data);
-          setFilterAttendance(data);
+        } catch (error) {
+          console.error("Fetch error:", error.message);
+          if (error.response && error.response.status === 404) {
+            alert("No attendance records found for the selected date.");
+          } else {
+            alert("An error occurred while fetching attendance data.");
+          }
+        } finally {
+          setLoading(false);
         }
-      } catch (error) {
-        console.error("Fetch error:", error.message);
-        if (error.response && !error.response.data.success) {
-          alert(error.response.data.error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
 
     useEffect(() => {
         fetchAttendance(selectedDate || new Date().toISOString().split("T")[0]);

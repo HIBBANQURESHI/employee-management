@@ -19,7 +19,11 @@ export const AttendanceHelper = ({ status, employeeId, statusChange, date }) => 
       }
     } catch (error) {
       console.error("Error updating attendance:", error.message);
-      alert("Failed to update attendance. Please try again.");
+      if (error.response) {
+        alert(error.response.data.message || "Failed to update attendance. Please try again.");
+      } else {
+        alert("Network error. Please check your connection.");
+      }
     }
   };
 
